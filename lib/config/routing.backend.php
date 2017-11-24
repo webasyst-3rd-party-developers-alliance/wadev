@@ -1,5 +1,6 @@
 <?php
 
-return array(
-    '' => 'backend/',
-);
+return [
+    'transaction/' => 'transaction',
+    ''             => 'backend/',
+];

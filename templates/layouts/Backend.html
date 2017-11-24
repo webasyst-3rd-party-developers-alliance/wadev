@@ -20,7 +20,7 @@
                 <h5 class="heading top-padded"><b>[`Navigation`]</b></h5>
                 <ul class="menu-v with-icons collapsible">
                     <li>
-                        <a href="#"><i class="icon16 folder"></i>[`Transactions`]</a>
+                        <a href="{$wa_app_url}transaction/"><i class="icon16 folder"></i>[`Transactions`]</a>
                     </li>
                     <li>
                         <a href="#"><i class="icon16 folder"></i>[`Check License`]</a>
@@ -40,5 +40,16 @@
         </div>
     </div>
 </div>
+<script>
+    (function($) {
+        'use strict';
+
+        $.wadev.init({
+            is_debug: {$is_debug},
+            app_url: {$wa_app_url|json_encode}
+        });
+    })(jQuery);
+</script>
+
 </body>
 </html>
