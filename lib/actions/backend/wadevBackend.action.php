@@ -1,5 +1,5 @@
 <?php
-class wadevBackendAction extends waViewAction
+class wadevBackendAction extends wadevViewAction
 {
     public function execute()
     {
