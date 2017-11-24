@@ -14,7 +14,7 @@ class wadevSettingsAction extends wadevViewAction
         //@todo: checkRights
 
         $settings = (array)$this->AppSetting->get('wadev');
-        unset($settings['api_key']);
+        unset($settings['api_key'], $settings['update_time']);
 
         $this->view->assign(compact('settings'));
     }
