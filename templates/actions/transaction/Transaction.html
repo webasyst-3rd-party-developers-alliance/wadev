@@ -1,7 +1,32 @@
-<div class="block shadowed">
-    {$hello}, I'm transaction
+<div class="block padded">
+    <h1>Бабло побеждает зло</h1>
 
-    <pre>{$transactions|print_r}</pre>
+    <table class="zebra">
+        <thead>
+        <tr>
+            <th>#</th>
+            <th>Дата</th>
+            <th>До</th>
+            <th>Сумма</th>
+            <th>После</th>
+            <th>Номер заказа</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $transactions as $transaction}
+        <tr>
+            <td>{$transaction->pk}</td>
+            <td>{$transaction->datetime|wa_datetime:'humandatetime'}</td>
+            <td>{$transaction->balance_before}</td>
+            <td>{$transaction->amount}</td>
+            <td>{$transaction->balance_after}</td>
+            <td>{$transaction->order_id}</td>
+            <td>{$transaction->comment|escape}</td>
+        </tr>
+        {/foreach}
+        </tbody>
+    </table>
 </div>
 
 
