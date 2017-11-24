@@ -1,6 +1,5 @@
 <?php
 
-class wadevTransactionModel extends wadevModelExt
+class wadevTransactionModel extends wadevBaseTransactionModel
 {
-    protected $table = 'wadev_transaction';
 }

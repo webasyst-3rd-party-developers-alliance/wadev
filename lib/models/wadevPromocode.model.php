@@ -1,6 +1,5 @@
 <?php
 
-class wadevPromocodeModel extends wadevModelExt
+class wadevPromocodeModel extends wadevBasePromocodeModel
 {
-    protected $table = 'wadev_promocode';
 }
