@@ -1,4 +1,4 @@
-<div class="block padded">
+<div class="block padded" id="wadev-settings-page">
     <h1>[`Settings`]</h1>
 
     <form method="post" class="wa-form">
@@ -24,3 +24,16 @@
         </div>
     </form>
 </div>
+{* JS *}
+<script>
+    ( function($) {
+        new SettingsPage({
+            $wrapper: $("#wadev-settings-page"),
+            locales: {
+                saving: "[`Saving`]",
+                saved: "[`Saved`]"
+            }
+        });
+//        $.wadev.setTitle("[`Settings`]");
+    })(jQuery);
+</script>
