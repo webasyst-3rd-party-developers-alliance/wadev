@@ -42,7 +42,7 @@
         var $pagination = $('[data-pagination]');
         $pagination.on('change', '[data-pagination-records]', function (e) {
             var records = $(this).val();
-            window.location = '{$wa_app_url}{$baseurl}0/' + records + '/{$search_url_append}';
+            $.wadev.router.load('{$wa_app_url}{$baseurl}0/' + records + '/{$search_url_append}');
         });
     }())
 </script>
