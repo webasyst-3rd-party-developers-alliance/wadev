@@ -69,6 +69,11 @@ class wadevConfig extends waAppConfig
         return $this->getAppSettingsModel()->get('wadev', $name, $default);
     }
 
+    public function setSetting($name, $value)
+    {
+        return $this->getAppSettingsModel()->set('wadev', $name, $value);
+    }
+
     public function currentBalance($update = false)
     {
         $cached_balance = $this->getSetting('balance', null);
@@ -103,5 +108,17 @@ class wadevConfig extends waAppConfig
         }
 
         return $this->AppSetting;
+    }
+
+    public function onCount()
+    {
+        $new_transactions = 0;
+        $transaction = new wadevTransaction();
+        if ($new_ones = $transaction->updateFromApi()) {
+            $new_transactions = (int) $this->getSetting('new_transactions') + $new_ones;
+            $this->setSetting('new_transactions', $new_transactions);
+            $this->setCount($new_transactions);
+        }
+        return $new_transactions;
     }
 }

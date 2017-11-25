@@ -7,6 +7,14 @@
  */
 class wadevTransaction extends wadevEntity
 {
+    public function __construct($model = null)
+    {
+        if ($model === null) {
+            $model = new wadevTransactionModel();
+        }
+        parent::__construct($model);
+    }
+
     /**
      * Получает транзакции из API и сохраняет новые в БД
      *
@@ -14,11 +22,19 @@ class wadevTransaction extends wadevEntity
      */
     public function updateFromApi()
     {
-        $api_key = wa('wadev')->getConfig()->getSetting('api_key');
-        if(!$api_key) {
+        $api_key = wadevHelper::getApiKey();
+        if (!$api_key) {
             return false;
         }
+        $last_update = (int) wa('wadev')->getConfig()->getSetting('api.transactions');
+        $refresh_rate = (int) wa('wadev')->getConfig()->getSetting('refresh_rate');
+        // не прошел еще нужны интервал
+        if (time() - $last_update < $refresh_rate * 60) {
+            return 0;
+        }
+
         $transactions = (new wadevWebasystMyApi($api_key))->transactions(['last' => 100]);
+        wa('wadev')->getConfig()->setSetting('api.transactions', time());
 
         $last_transaction = $this->model->findLast(1);
         $new_transactions = [];
@@ -41,8 +57,8 @@ class wadevTransaction extends wadevEntity
 
     public function getOrderInfo($order_id)
     {
-        $api_key = wa('wadev')->getConfig()->getSetting('api_key');
-        if(!$api_key) {
+        $api_key = wadevHelper::getApiKey();
+        if (!$api_key) {
             return false;
         }
         $order = (new wadevWebasystMyApi($api_key))->order($order_id);
