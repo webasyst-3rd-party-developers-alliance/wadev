@@ -1,5 +1,5 @@
 <div class="block padded">
-    <p class="wadev-balance">[`Current account balance`]: {$balance.balance}. {if !empty($balance['error'])}<br><span class="error">{$balance.error}</span>{/if}</p>
+    <p class="wadev-balance">[`Current account balance`]: <b>{$balance.balance|wa_currency_html:$balance.currency}</b>. {if !empty($balance['error'])}<br><span class="error">{$balance.error}</span>{/if}</p>
     <div class="content-header">
         <h1>[`Transactions`]</h1>
     </div>
@@ -29,12 +29,12 @@
         </thead>
         <tbody>
         {foreach $transactions as $transaction}
-        <tr>
+        <tr{if $transaction->amount < 0} class="red italic"{/if}>
             <td>{$transaction->datetime|wa_datetime:'humandatetime'}</td>
-            <td>{$transaction->balance_before}</td>
-            <td>{$transaction->amount}</td>
-            <td>{$transaction->balance_after}</td>
-            <td><a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a></td>
+            <td class="align-right numerical">{$transaction->balance_before|wa_format_number:2}</td>
+            <td class="align-right numerical bold">{$transaction->amount|wa_format_number:2}</td>
+            <td class="align-right numerical">{$transaction->balance_after|wa_format_number:2}</td>
+            <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
             <td>{$transaction->comment|escape}</td>
         </tr>
         {/foreach}
