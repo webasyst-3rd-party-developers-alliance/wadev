@@ -1,21 +1,72 @@
 (function ($) {
+    "use strict";
+
     $.wadev = {
+        // как-то разрастается
         app_url: '',
         is_debug: '',
+        sidebar: '',
+        app_name: '',
+        account_name: '',
         init: function (options) {
-            'app_url|is_debug'.split('|').forEach(function (o) {
+            'app_url|is_debug|sidebar|app_name|account_name'.split('|').forEach(function (o) {
                 $.wadev[o] = options[o];
             });
 
             $.wadev.router = new WadevRouter({
                 $content: $('#content')
             });
+
+            this.highlightMenu();
+            this.setTitle();
+            this.handlers();
+            this.events();
+        },
+        highlightMenu: function (menu, el) {
+            var $menu = menu ? $(menu) : $($.wadev.sidebar),
+                link = window.location.pathname + window.location.search,
+                $lnks = $menu.find('a'),
+                $lnk = $menu.find('a[href="' + link + '"]'),
+                $el = el ? $(el) : $lnk.closest('li');
+
+            // если не найдено по полному урлу или не передан элемент - найдем более-менее подходящий
+            if (!$el.length) {
+                $lnks.each(function () {
+                    if (link.indexOf(this.href.replace(window.location.origin, '')) === 0) {
+                        $el = $(this).closest('li');
+                        return false;
+                    }
+                });
+            }
+
+            if ($el.length) {
+                $menu.find('.selected').removeClass('selected');
+                $el.addClass('selected');
+            }
+        },
+        setTitle: function (title) {
+            var h1 = $('.content-header h1');
+            title = title || (h1.length ? h1.text() : '') || $.wadev.app_name;
+
+            document.title = title + ' — ' + $.wadev.account_name;
+        },
+        handlers: function () {
+        },
+        events: function () {
+            $('#wa-app')
+                .on('highlight.wadev', function (e, menu, el) {
+                    $.wadev.highlightMenu(menu, el);
+                })
+                .on('settitle.wadev', function (e, title) {
+                    $.wadev.setTitle(title);
+                });
         }
     };
 })(jQuery);
 
 
 var WadevRouter = (function ($) {
+    "use strict";
 
     WadevRouter = function (options) {
         var that = this;
@@ -61,11 +112,9 @@ var WadevRouter = (function ($) {
             if (use_content_router) {
                 event.preventDefault();
                 that.load(this).done(function () {
-                    var $menu = $link.closest('[data-wadev-menu]');
-                    if ($menu.length) {
-                        $menu.find('li').removeClass('selected');
-                        $link.closest('li').addClass('selected');
-                    }
+                    $('#wa-app')
+                        .trigger('highlight.wadev')
+                        .trigger('settitle.wadev');
                 });
             }
         });
@@ -104,7 +153,7 @@ var WadevRouter = (function ($) {
             // return false;
         }
 
-        // that.animate( true );
+        that.animate(true);
 
         if (that.xhr) {
             that.xhr.abort();
@@ -121,7 +170,7 @@ var WadevRouter = (function ($) {
             that.except = false;
             that.setContent(html, content_target);
 
-            // that.animate( false );
+            that.animate(false);
 
             that.xhr = false;
         });
@@ -161,14 +210,6 @@ var WadevRouter = (function ($) {
             } else if (state.content) {
                 that.setContent(state.content);
             }
-            //
-            // // TITLE
-            // if (state.title) {
-            //     $.team.setTitle(state.title);
-            // }
-
-            // SIDEBAR
-            // $.team.sidebar.selectLink( state.content_uri );
         } else {
             location.reload();
         }
@@ -181,7 +222,7 @@ var WadevRouter = (function ($) {
         $(".router-loading-indicator").remove();
 
         if (show) {
-            var $header = $content.find(".t-content-header h1"),
+            var $header = $content.find(".content-header h1"),
                 loading = '<i class="icon16 loading router-loading-indicator"></i>';
 
             if ($header.length) {

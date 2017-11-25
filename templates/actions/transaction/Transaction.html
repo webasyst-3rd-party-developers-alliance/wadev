@@ -1,6 +1,8 @@
 <div class="block padded">
     <p class="wadev-balance">[`Current account balance`]: {$balance.balance}. {if !empty($balance['error'])}<br><span class="error">{$balance.error}</span>{/if}</p>
-    <h1>[`Transactions`]</h1>
+    <div class="content-header">
+        <h1>[`Transactions`]</h1>
+    </div>
 
     <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
 
