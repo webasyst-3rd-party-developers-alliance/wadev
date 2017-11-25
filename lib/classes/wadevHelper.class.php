@@ -20,6 +20,14 @@ class wadevHelper
     }
 
     /**
+     * @return string
+     */
+    public static function getApiKey()
+    {
+        return wa('wadev')->getConfig()->getSetting('api_key');
+    }
+
+    /**
      * @param $view waSmarty3View
      * @param $start
      * @param $limit

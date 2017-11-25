@@ -28,8 +28,7 @@ class wadevWebasystMyApi
      */
     public function balance()
     {
-        $response = $this->net->reset()->query($this->api_url . 'balance/');
-        $this->_validateResponse($response);
+        $response = $this->query('balance/');
 
         return $response['data'];
     }
@@ -42,8 +41,7 @@ class wadevWebasystMyApi
     public function transactions(array $options = [])
     {
         $last = !empty($options['last']) ? min(max((int)$options['last'], 1), 100) : 10;
-        $response = $this->net->reset()->query($this->api_url . 'ca/', ['last' => $last]);
-        $this->_validateResponse($response);
+        $response = $this->query('ca/', ['last' => $last]);
 
         return $response['data'];
     }
@@ -60,8 +58,7 @@ class wadevWebasystMyApi
         if (!empty($product)) {
             $params['product'] = $product;
         }
-        $response = $this->net->reset()->query($this->api_url . 'check/', $params);
-        $this->_validateResponse($response);
+        $response = $this->query('check/', $params);
 
         return $response['data'];
     }
@@ -73,8 +70,7 @@ class wadevWebasystMyApi
      */
     public function order($id)
     {
-        $response = $this->net->reset()->query($this->api_url . 'order/', ['id' => $id]);
-        $this->_validateResponse($response);
+        $response = $this->query('order/', ['id' => $id]);
 
         return $response['data'];
     }
@@ -91,8 +87,7 @@ class wadevWebasystMyApi
             $params['code'] = $code;
         }
 
-        $response = $this->net->reset()->query($this->api_url . 'promocode/', $params);
-        $this->_validateResponse($response);
+        $response = $this->query('promocode/', $params);
 
         return $response['data'];
     }
@@ -118,8 +113,7 @@ class wadevWebasystMyApi
     public function createPromocode($code, $percent, array $products, array $options = [])
     {
         $params = array_merge($options, ['code' => $code, 'percent' => min(max((int)$percent, 1), 100), 'products' => $products]);
-        $response = $this->net->reset()->query($this->api_url . 'promocode/', $params, waNet::METHOD_POST);
-        $this->_validateResponse($response);
+        $response = $this->query('promocode/', $params, waNet::METHOD_POST);
 
         return $response['data'];
     }
@@ -133,8 +127,7 @@ class wadevWebasystMyApi
      */
     public function deletePromocode($code)
     {
-        $response = $this->net->reset()->query($this->api_url . 'promocode/', ['code' => $code], waNet::METHOD_DELETE);
-        $this->_validateResponse($response);
+        $response = $this->query('promocode/', ['code' => $code], waNet::METHOD_DELETE);
 
         return $response['data'];
     }
@@ -146,5 +139,13 @@ class wadevWebasystMyApi
         }
 
         return true;
+    }
+
+    private function query($url, $params = [], $method = waNet::METHOD_GET)
+    {
+        $response = $this->net->reset()->query($this->api_url . $url, $params, $method);
+        $this->_validateResponse($response);
+
+        return $response;
     }
 }
