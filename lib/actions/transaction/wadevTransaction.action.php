@@ -7,6 +7,9 @@ class wadevTransactionAction extends wadevViewAction
         $t = new wadevTransaction(new wadevTransactionModel());
         $new_transactions_count = $t->updateFromApi();
 
+        // удалим инфу о новых
+        (new waAppSettingsModel())->set('wadev', 'new_transactions', 0);
+
         $search = waRequest::get('search', '', waRequest::TYPE_STRING_TRIM);
         $start = waRequest::param('start', 0, waRequest::TYPE_INT);
         $limit = waRequest::param('limit', 10, waRequest::TYPE_INT);
