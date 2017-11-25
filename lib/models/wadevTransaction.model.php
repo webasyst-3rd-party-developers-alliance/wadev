@@ -22,6 +22,7 @@ class wadevTransactionModel extends wadevBaseTransactionModel
                     *
                 FROM wadev_transaction
                 {$search_sql}
+                ORDER BY datetime DESC
                 LIMIT i:start, i:limit
             ", [
                 'start'  => $start,
