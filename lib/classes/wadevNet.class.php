@@ -12,9 +12,9 @@ class wadevNet extends waNet
     public function __construct($options = array(), $custom_headers = array())
     {
         parent::__construct($options, $custom_headers);
-        $this->_reset();
         $this->default_options = $this->options;
-        $this->request_headers = $this->request_headers;
+        $this->default_request_headers = $this->request_headers;
+        $this->_reset();
     }
 
     /**
@@ -74,7 +74,6 @@ class wadevNet extends waNet
 
         return $response;
     }
-
 
     /**
      * @param array $options
