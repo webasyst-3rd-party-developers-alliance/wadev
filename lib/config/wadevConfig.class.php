@@ -64,9 +64,33 @@ class wadevConfig extends waAppConfig
         return $all_plugins_routes;
     }
 
-    public function getSetting($name = null)
+    public function getSetting($name = null, $default = '')
     {
-        return $this->getAppSettingsModel()->get('wadev', $name);
+        return $this->getAppSettingsModel()->get('wadev', $name, $default);
+    }
+
+    public function currentBalance($update = false)
+    {
+        $cached_balance = $this->getSetting('balance', null);
+        $balance = null;
+
+        if (is_string($cached_balance)) {
+            $balance = json_decode($cached_balance, true);
+        }
+
+        if ($update || !is_array($balance)) {
+            try {
+                $balance = (new wadevWebasystMyApi($this->getSetting('api_key')))->balance();
+                $this->getAppSettingsModel()->set('wadev', 'balance', json_encode($balance));
+            } catch (waException $e) {
+                if (!is_array($balance)) {
+                    $balance = array();
+                }
+                $balance = array_merge(['balance' => 0.0, 'currency' => 'RUB', 'update_datetime' => date('Y-m-d H:i:s'), 'error' => $e->getMessage()]);
+            }
+        }
+
+        return $balance;
     }
 
     /**
