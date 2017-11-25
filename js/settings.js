@@ -40,9 +40,16 @@ var SettingsPage = ( function($) {
         });
 
         that.$form.on("change", "input, select, textarea", setChanged);
+        that.$form.on('change', '#wadev-settings-reset', function(){
+            var $options = $('#wadev-reset-options'), checked = $(this).is(':checked');
+
+            if(checked) $('#wadev-reset-options').slideDown();
+            else $('#wadev-reset-options').slideUp();
+            $(':input', $options).prop('disabled', !checked);
+        });
 
         function setChanged() {
-            if (!that.is_form_changed) {
+            if (!that.is_form_changed && !$(this).hasClass('wadev-ignore-change')) {
                 that.is_form_changed = true;
                 that.$submitButton.removeClass("green").addClass("yellow");
             }
@@ -70,6 +77,7 @@ var SettingsPage = ( function($) {
             }).always( function() {
                 $loading.remove();
                 that.is_locked = false;
+                $('#wadev-settings-reset').prop('checked', false).change();
             });
         }
     };
