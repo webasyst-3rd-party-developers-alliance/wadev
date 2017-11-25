@@ -14,8 +14,10 @@ class wadevTransactionAction extends wadevViewAction
 
         $transactions = wadevTransactionModel::model()->findAll($search, $start, $limit, $total_rows);
 
+        $balance = wa('wadev')->getConfig()->currentBalance((bool)$new_transactions_count);
+
         wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
 
-        $this->view->assign(compact('search', 'new_transactions_count', 'transactions'));
+        $this->view->assign(compact('balance', 'search', 'new_transactions_count', 'transactions'));
     }
 }
