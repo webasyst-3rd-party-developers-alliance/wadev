@@ -38,4 +38,15 @@ class wadevTransaction extends wadevEntity
 
         return count($new_transactions);
     }
+
+    public function getOrderInfo($order_id)
+    {
+        $api_key = wa('wadev')->getConfig()->getSetting('api_key');
+        if(!$api_key) {
+            return false;
+        }
+        $order = (new wadevWebasystMyApi($api_key))->order($order_id);
+
+        return $order;
+    }
 }

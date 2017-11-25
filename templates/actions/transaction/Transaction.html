@@ -13,7 +13,7 @@
     </form>
 
 
-    <table class="zebra">
+    <table class="zebra" data-transactions>
         <thead>
         <tr>
             <th>Дата</th>
@@ -31,7 +31,7 @@
             <td>{$transaction->balance_before}</td>
             <td>{$transaction->amount}</td>
             <td>{$transaction->balance_after}</td>
-            <td>{$transaction->order_id}</td>
+            <td><a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a></td>
             <td>{$transaction->comment|escape}</td>
         </tr>
         {/foreach}
@@ -47,4 +47,17 @@
     inline}
 </div>
 
+<script>
+    (function(){
+        var $transaction_wrapper = $('[data-transactions]');
 
+        $transaction_wrapper.on('click', '[data-order-id]', function (e) {
+            e.preventDefault();
+            var $this = $(this);
+
+            $('<div>').waDialog({
+                url: '?module=transaction&action=info&order_id=' + $this.data('order-id')
+            });
+        })
+    })()
+</script>
