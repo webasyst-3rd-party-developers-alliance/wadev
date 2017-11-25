@@ -15,6 +15,9 @@ class wadevWebasystMyApi
 
     public function __construct($api_key)
     {
+        if (empty($api_key)) {
+            throw new waException('Key is required for API access');
+        }
         $this->api_key = $api_key;
         $this->net = new wadevNet(['format' => waNet::FORMAT_JSON], ['X-API-Key' => $api_key]);
     }
