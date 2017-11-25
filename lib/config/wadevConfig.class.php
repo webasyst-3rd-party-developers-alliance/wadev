@@ -6,6 +6,9 @@
  */
 class wadevConfig extends waAppConfig
 {
+    /** @var waAppSettingsModel */
+    protected $AppSetting;
+
     /**
      * @param array $route
      * @return array|null
@@ -59,5 +62,22 @@ class wadevConfig extends waAppConfig
             });
         }
         return $all_plugins_routes;
+    }
+
+    public function getSetting($name = null)
+    {
+        return $this->getAppSettingsModel()->get('wadev', $name);
+    }
+
+    /**
+     * @return waAppSettingsModel
+     */
+    protected function getAppSettingsModel()
+    {
+        if (!$this->AppSetting) {
+            $this->AppSetting = new waAppSettingsModel();
+        }
+
+        return $this->AppSetting;
     }
 }
