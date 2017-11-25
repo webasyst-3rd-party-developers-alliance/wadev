@@ -60,6 +60,78 @@
                 .on('settitle.wadev', function (e, title) {
                     $.wadev.setTitle(title);
                 });
+        },
+        hashCode: function (str) {
+            var hash = 0, i, chr;
+            if (str.length === 0) return hash;
+            for (i = 0; i < str.length; i++) {
+                chr = str.charCodeAt(i);
+                hash = ((hash << 5) - hash) + chr;
+                hash |= 0; // Convert to 32bit integer
+            }
+            return hash;
+        },
+        watchForChanges: function (options) {
+            var o = {
+                    $form: null,
+                    onChange: function () {
+                        $(this).find('[type="submit"]').removeClass('yellow red green').addClass('yellow');
+                    },
+                    onSame: function () {
+                        $(this).find('[type="submit"]').removeClass('yellow red green').addClass('green');
+                    },
+                    prevent: true,
+                    notSaved: true,
+                    preventText: 'На странице есть несохраненные данные. Точно уйти с этой страницы?'
+                },
+                handlers_set = false;
+
+            if (!options.$form) {
+                return;
+            }
+
+            o = $.extend({}, o, options);
+            var settings_values_hash = $.wadev.hashCode(o.$form.serialize());
+
+            var prevent = function (e) {
+                var $a = $(e.target),
+                    in_form = $a.closest(o.$form);
+                if (in_form && !in_form.length) {
+                    if (o.notSaved && !confirm(o.preventText)) {
+                        e.stopPropagation();
+                        e.preventDefault();
+                    } else {
+                        _saved();
+                    }
+                }
+            };
+
+            o.$form.on('change click blur', ':input', function (e) {
+                var new_hash = $.wadev.hashCode(o.$form.serialize());
+
+                if (new_hash !== settings_values_hash) {
+                    o.notSaved = true;
+                    if (o.prevent && !handlers_set) {
+                        $('#wa-app').find('a').on('click.wadev', prevent);
+                        handlers_set = true;
+                    }
+                    $.isFunction(o.onChange) && o.onChange.call(o.$form.get(0));
+                } else {
+                    _saved();
+                    settings_values_hash = new_hash;
+                }
+            });
+
+            function _saved() {
+                $('#wa-app').find('a').off('click.wadev', prevent);
+                o.notSaved = false;
+                handlers_set = false;
+                $.isFunction(o.onSame) && o.onSame.call(o.$form.get(0));
+            }
+
+            return {
+                saved: _saved
+            };
         }
     };
 })(jQuery);
