@@ -26,30 +26,35 @@ class wadevTransaction extends wadevEntity
         if (!$api_key) {
             return false;
         }
-        $last_update = (int) wa('wadev')->getConfig()->getSetting('api.transactions');
-        $refresh_rate = (int) wa('wadev')->getConfig()->getSetting('refresh_rate');
+        $last_update = (int)wa('wadev')->getConfig()->getSetting('api.transactions');
+        $refresh_rate = (int)wa('wadev')->getConfig()->getSetting('refresh_rate');
         // не прошел еще нужны интервал
         if (time() - $last_update < $refresh_rate * 60) {
             return 0;
         }
 
-        $transactions = (new wadevWebasystMyApi($api_key))->transactions(['last' => 100]);
-        wa('wadev')->getConfig()->setSetting('api.transactions', time());
-
-        $last_transaction = $this->model->findLast(1);
         $new_transactions = [];
 
-        if (is_array($transactions)) {
-            foreach ($transactions as $t) {
-                if (strtotime($t['datetime']) <= strtotime($last_transaction->datetime)) {
-                    break;
-                }
+        try {
+            $transactions = (new wadevWebasystMyApi($api_key))->transactions(['last' => 100]);
+            wa('wadev')->getConfig()->setSetting('api.transactions', time());
 
-                $transaction = new wadevTransactionModel($t);
-                if ($transaction->save()) {
-                    $new_transactions[] = $transaction;
+            $last_transaction = $this->model->findLast(1);
+
+            if (is_array($transactions)) {
+                foreach ($transactions as $t) {
+                    if (!is_null($last_transaction) && strtotime($t['datetime']) <= strtotime($last_transaction->datetime)) {
+                        break;
+                    }
+
+                    $transaction = new wadevTransactionModel($t);
+                    if ($transaction->save()) {
+                        $new_transactions[] = $transaction;
+                    }
                 }
             }
+        } catch (waException $e) {
+            // todo do smth
         }
 
         return count($new_transactions);
