@@ -21,6 +21,18 @@
                 </select>
             </div>
         </div>
+        <div class="field">
+            <div class="name">[`Reset`]</div>
+            <div class="value">
+                <input type="checkbox" class="wadev-ignore-change" id="wadev-settings-reset"><br>
+                <span class="hint"><i class="icon10 exclamation"></i>[`Be careful! Doors are closing!`]</span>{* @todo надо какое-нибудь предупреждение *}
+            </div>
+            <div class="value" style="display: none" id="wadev-reset-options">
+                <input type="checkbox" name="reset[transactions]" value="1"> [`Clear transactions`]<br>
+                <input type="checkbox" name="reset[promocodes]" value="1"> [`Clear promocodes`]<br>
+                <input type="checkbox" name="reset[products]" value="1"> [`Clear products`]
+            </div>
+        </div>
         <div class="field buttons">
             <button class="button green" type="submit">[`Save`]</button>
         </div>
@@ -28,7 +40,7 @@
 </div>
 {* JS *}
 <script>
-    ( function($) {
+    (function ($) {
         new SettingsPage({
             $wrapper: $("#wadev-settings-page"),
             locales: {
