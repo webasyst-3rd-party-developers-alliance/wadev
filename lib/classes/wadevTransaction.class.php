@@ -40,19 +40,19 @@ class wadevTransaction extends wadevEntity
             wa('wadev')->getConfig()->setSetting('api.transactions', time());
 
             $last_transaction = $this->model->findLast(1);
+            if (!is_null($last_transaction)) {
+                $transactions = array_filter($transactions, function ($t) use ($last_transaction) {
+                    return strtotime($t['datetime']) > strtotime($last_transaction->datetime);
+                });
+            }
 
-            if (is_array($transactions)) {
-                foreach ($transactions as $t) {
-                    if (!is_null($last_transaction) && strtotime($t['datetime']) <= strtotime($last_transaction->datetime)) {
-                        break;
-                    }
-
-                    $transaction = new wadevTransactionModel($t);
-                    if ($transaction->save()) {
-                        $new_transactions[] = $transaction;
-                    }
+            foreach ($transactions as $t) {
+                $transaction = new wadevTransactionModel($t);
+                if ($transaction->save()) {
+                    $new_transactions[] = $transaction;
                 }
             }
+
         } catch (waException $e) {
             // todo do smth
         }
