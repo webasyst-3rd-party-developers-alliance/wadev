@@ -48,6 +48,10 @@ class wadevSettingsSaveController extends waJsonController
                     (new $model)->truncate();
                 }
             }
+
+            if ($key == 'transactions') {
+                (new waAppSettingsModel())->del('wadev', 'api.transactions');
+            }
         }
     }
 }
