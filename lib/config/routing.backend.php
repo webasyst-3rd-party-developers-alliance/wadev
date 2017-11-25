@@ -1,7 +1,8 @@
 <?php
 
 return [
-    'transaction/' => 'transaction',
-    'settings/'    => 'settings/',
-    ''             => 'backend/',
+    'transaction/'                   => 'transaction',
+    'transaction/<start>/<limit>'   => 'transaction',
+    'settings/'                     => 'settings/',
+    ''                              => 'backend/',
 ];

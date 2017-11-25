@@ -1,14 +1,21 @@
 <?php
 
-class wadevTransactionAction extends wadevContentViewAction
+class wadevTransactionAction extends wadevViewAction
 {
     public function execute()
     {
-        $transactions = wadevTransactionModel::model()->getLast();
+        $t = new wadevTransaction(new wadevTransactionModel());
+        $new_transactions_count = $t->updateFromApi();
 
-        $this->view->assign([
-            'hello'        => 'hi',
-            'transactions' => $transactions,
-        ]);
+        $search = waRequest::get('search', '', waRequest::TYPE_STRING_TRIM);
+        $start = waRequest::param('start', 0, waRequest::TYPE_INT);
+        $limit = waRequest::param('limit', 10, waRequest::TYPE_INT);
+        $total_rows = true;
+
+        $transactions = wadevTransactionModel::model()->findAll($search, $start, $limit, $total_rows);
+
+        wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
+
+        $this->view->assign(compact('search', 'new_transactions_count', 'transactions'));
     }
 }

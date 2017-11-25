@@ -1,10 +1,21 @@
 <div class="block padded">
-    <h1>Бабло побеждает зло</h1>
+    <h1>[`Transactions`]</h1>
+
+    <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
+
+    <form method="get" class="wa-form">
+        <div class="field">
+            <div class="name">[`Search`]</div>
+            <div class="value">
+                <input type="search" name="search" value="{$search|default:''|escape}">
+            </div>
+        </div>
+    </form>
+
 
     <table class="zebra">
         <thead>
         <tr>
-            <th>#</th>
             <th>Дата</th>
             <th>До</th>
             <th>Сумма</th>
@@ -16,7 +27,6 @@
         <tbody>
         {foreach $transactions as $transaction}
         <tr>
-            <td>{$transaction->pk}</td>
             <td>{$transaction->datetime|wa_datetime:'humandatetime'}</td>
             <td>{$transaction->balance_before}</td>
             <td>{$transaction->amount}</td>
@@ -27,6 +37,14 @@
         {/foreach}
         </tbody>
     </table>
+    {include '../include.pagination.html'
+        baseurl='transaction/'
+        limit=$limit
+        search=$search
+        current_page=$current_page
+        pagination=$pagination
+        start=$start
+    inline}
 </div>
 
 

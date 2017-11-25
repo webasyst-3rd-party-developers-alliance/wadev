@@ -15,4 +15,6 @@ class wadevViewAction extends waViewAction
             $this->setLayout(new wadevBackendLayout());
         }
     }
+
+    //todo: rights
 }
