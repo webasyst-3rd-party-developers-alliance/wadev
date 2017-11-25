@@ -59,7 +59,8 @@
             var $this = $(this);
 
             $('<div>').waDialog({
-                url: '?module=transaction&action=info&order_id=' + $this.data('order-id')
+                url: '?module=transaction&action=info&order_id=' + $this.data('order-id'),
+                'buttons': '<a href="#" class="cancel hint">Close</a>'
             });
         })
     })()

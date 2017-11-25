@@ -1,3 +1,81 @@
-<div>
-{$order|default:''|var_dump}
+{if $order}
+<h1>[`{$order.status|default:'Status unknown'}`]</h1>
+
+{if !empty($order.discounts)}
+<div class="block">
+    <h2>[`Discounts`]</h2>
+    <div>
+        <table class="zebra">
+            <thead>
+            <tr>
+                <th>[`type`]</th>
+                <th>[`percent`]</th>
+                <th>[`code`]</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $order.discounts as $discount}
+                <tr>
+                    <td>{$discount.type|default:'unknown'}</td>
+                    <td>{$discount.percent|default:0}</td>
+                    <td>{$discount.code|default:''}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
 </div>
+{/if}
+
+{if !empty($order.transactions)}
+<div class="block">
+    <h2>[`Transactions`]</h2>
+    <div>
+        <table class="zebra">
+            <thead>
+            <tr>
+                <th>[`datetime`]</th>
+                <th>[`amount`]</th>
+                <th>[`comment`]</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $order.transactions as $transaction}
+                <tr>
+                    <td>{$transaction.datetime|wa_datetime:'humandatetime'}</td>
+                    <td>{$transaction.amount} {$transaction.currency}</td>
+                    <td>{$transaction.comment|default:''}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/if}
+
+{if !empty($order.licenses)}
+<div class="block">
+    <h2>[`Licenses`]</h2>
+    <div>
+        <table class="zebra">
+            <thead>
+            <tr>
+                <th>[`product`]</th>
+                <th>[`domain`]</th>
+                <th>[`inst_datetime`]</th>
+            </tr>
+            </thead>
+            <tbody>
+            {foreach $order.licenses as $license}
+                <tr>
+                    <td>{$license.product}</td>
+                    <td><a href="http://{$license.domain|default:'#'}" target="_blank">{$license.domain|default:''}</a></td>
+                    <td>{$license.inst_datetime|wa_datetime:'humandatetime'}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    </div>
+</div>
+{/if}
+{/if}
