@@ -68,7 +68,7 @@ class wadevNet extends waNet
 
         if ($this->options['expected_http_code'] !== null) {
             if (empty($this->response_header['http_code']) || ($this->response_header['http_code'] != $this->options['expected_http_code'])) {
-                throw new waException($response, $this->response_header['http_code']);
+                throw new waException(is_string($response) ? $response : 'Error', $this->response_header['http_code']);
             }
         }
 
