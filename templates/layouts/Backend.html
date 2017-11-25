@@ -5,9 +5,24 @@
     <title>{$wa->appName()} &mdash; {$wa->accountName()}</title>
     {$wa->css()}
     <link type="text/css" rel="stylesheet" href="{$wa_app_static_url}css/wadev.css?v{$wa->version()}">
-    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery/jquery-1.8.2.min.js"></script>
-    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-wa/wa.core.js?v{$wa->version(true)}"></script>
-    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-wa/wa.dialog.js?v{$wa->version(true)}"></script>
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery/jquery-1.11.1.min.js?{$wa->version(true)}"></script>
+
+    {wa_js file="js/compiled/wadev-external.min.js"}
+        {$wa_url}wa-content/js/jquery/jquery-migrate-1.2.1.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.core.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.widget.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.mouse.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.sortable.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.droppable.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.draggable.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.position.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.autocomplete.min.js
+        {$wa_url}wa-content/js/jquery-ui/jquery.ui.datepicker.min.js
+        {$wa_url}wa-content/js/jquery-plugins/jquery.store.js
+        {$wa_url}wa-content/js/jquery-wa/wa.core.js
+        {$wa_url}wa-content/js/jquery-wa/wa.dialog.js
+        {$wa_url}wa-content/js/farbtastic/farbtastic.js
+    {/wa_js}
 
     {wa_js file="js/compiled/wadev.min.js"}
         {$wa_url}wa-content/js/jquery-wa/wa.core.js
