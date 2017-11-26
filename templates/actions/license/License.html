@@ -23,3 +23,15 @@
         </form>
     </div>
 </div>
+
+<script>
+    (function ($) {
+        new LicensePage({
+            $wrapper: $("#wadev-license-page"),
+            locales: {
+                checking: "[`Checking`]"
+            }
+        });
+        $.wadev.setTitle('[`License Check`]')
+    })(jQuery);
+</script>
