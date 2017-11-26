@@ -18,7 +18,7 @@ class wadevBackendLayout extends waLayout
         $this->view->assign('backend_assets', wa()->event('backend_assets'));
 
         $this->view->assign(array(
-            'is_debug' => (bool) waSystemConfig::isDebug(),
+            'is_debug' => (int)waSystemConfig::isDebug(),
         ));
     }
 }
