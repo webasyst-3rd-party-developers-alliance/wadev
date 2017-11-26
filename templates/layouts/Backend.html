@@ -24,13 +24,13 @@
         {$wa_url}wa-content/js/jquery-wa/wa.core.js
         {$wa_url}wa-content/js/jquery-wa/wa.dialog.js
         {$wa_url}wa-content/js/farbtastic/farbtastic.js
+        {$wa_app_static_url}js/vendors/tmpl.js
     {/wa_js}
 
     {wa_js file="js/compiled/wadev.min.js"}
-        {$wa_url}wa-content/js/jquery-wa/wa.core.js
-        {$wa_url}wa-content/js/jquery-wa/wa.dialog.js
         {$wa_app_static_url}js/wadev.js
         {$wa_app_static_url}js/settings.js
+        {$wa_app_static_url}js/licenses.js
         {$wa_app_static_url}js/products.js
     {/wa_js}
 
@@ -48,7 +48,7 @@
                         <a href="{$wa_app_url}transaction/"><i class="icon16 folder"></i>[`Transactions`]</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon16 folder"></i>[`Check License`]</a>
+                        <a href="{$wa_app_url}license/"><i class="icon16 folder"></i>[`License Check`]</a>
                     </li>
                     <li>
                         <a href="{$wa_app_url}products/"><i class="icon16 apps"></i>[`Products`]</a>

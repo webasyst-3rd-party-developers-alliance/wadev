@@ -18,7 +18,6 @@
             });
 
             this.highlightMenu();
-            this.setTitle();
             this.handlers();
             this.events();
         },
