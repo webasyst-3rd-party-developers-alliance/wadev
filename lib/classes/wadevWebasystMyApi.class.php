@@ -19,7 +19,7 @@ class wadevWebasystMyApi
             throw new waException('Key is required for API access');
         }
         $this->api_key = $api_key;
-        $this->net = new wadevNet(['format' => waNet::FORMAT_JSON], ['X-API-Key' => $api_key]);
+        $this->net = new wadevNet(['format' => waNet::FORMAT_JSON, 'expected_http_code' => null], ['X-API-Key' => $api_key]);
     }
 
     /**
@@ -134,8 +134,21 @@ class wadevWebasystMyApi
 
     protected function _validateResponse($response)
     {
-        if (!is_array($response) || !isset($response['status']) || $response['status'] != 'ok' || !isset($response['data'])) {
+        if (!is_array($response) || !isset($response['status'])) {
             throw new waException();
+        }
+
+        if ($response['status'] == 'fail') {
+            if (isset($response['error'])) {
+                if (is_string($response['error'])) {
+                    throw new waException($response['error']);
+                }
+            }
+            throw new waException('Request error');
+        }
+
+        if ($this->net->getResponseHeader('http_code') != '200') {
+            throw new waException('Error ' . $this->net->getResponseHeader('http_code'), $this->net->getResponseHeader('http_code'));
         }
 
         return true;
@@ -145,6 +158,10 @@ class wadevWebasystMyApi
     {
         $response = $this->net->reset()->query($this->api_url . $url, $params, $method);
         $this->_validateResponse($response);
+
+        if (!isset($response['data'])) {
+            $response['data'] = '';
+        }
 
         return $response;
     }
