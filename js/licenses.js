@@ -1,8 +1,8 @@
 "use strict";
 
-var LicensePage = (function ($) {
+window.LicensePage = (function ($) {
 
-    LicensePage = function (options) {
+    window.LicensePage = function (options) {
         var that = this;
 
         that.$wrapper = options["$wrapper"];
