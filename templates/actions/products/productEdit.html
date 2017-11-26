@@ -1,0 +1,108 @@
+<div id="wadev-edit-product-dialog" style="display: block;">
+<form id="wadev-save-product" action="?module=product&action=save">
+	<div class="dialog-content">
+		<div class="field-group">
+			<input type="hidden" name="product[id]" {if $product}value="{$product.id}"{/if}>
+			<div class="field">
+				<div class="name">Название продукта</div>
+				<div class="value no-shift">
+					<input type="text" name="product[name]" {if $product}value="{$product.name}"{/if} >
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">slug</div>
+				<div class="value no-shift">
+					<input type="text" name="product[slug]" {if $product}value="{$product.slug}"{/if} >
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">Цена продукта</div>
+				<div class="value no-shift">
+					<input type="number" min="0" name="product[price]" {if $product}value="{$product.price}"{/if} >
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">Текущая версия</div>
+				<div class="value no-shift">
+					<input type="text" name="product[current_version]" {if $product}value="{$product.current_version}"{/if} >
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">Участвует в акциях Webasyst</div>
+				<div class="value no-shift">
+					<input type="checkbox" class="js-ibutton" id="js-ibutton-1" name="product[wa_actions]" value="1">
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">Скидка 50% на повторные лицензии</div>
+				<div class="value no-shift">
+					<input type="checkbox" class="js-ibutton" id="js-ibutton-2" name="product[repeated_license]" value="1">
+				</div>
+			</div>
+			<div class="field">
+				<div class="name">Партнерская программа</div>
+				<div class="value no-shift">
+					да
+					<input type="checkbox" class="js-ibutton" id="js-ibutton-3" name="product[partner]" >нет
+				</div>
+			</div>
+		</div>
+
+	</div>
+	<div class="dialog-buttons inline-block">
+		<div class="inline-block float-left">
+			<input id="product-save-button" class="button green" type="button" value="{if $product}Сохранить{else}Создать{/if}" style="display: inline-block;" /> 
+			&nbsp;&nbsp;&nbsp;&nbsp;или&nbsp;&nbsp;&nbsp;&nbsp;
+			<a href="#" class="cancel js-link" style="display: inline-block;">отмена</a>
+			
+		</div>
+		{if $product}
+			<div class="inline-block float-right">
+				<a id="product-delete-link" product_id="{$product.id}" href="#" class="js-link float-right inline-block"><i class="icon16 no"></i> Удалить</a>
+			</div>
+		{/if}
+	</div>
+</form>
+</div>
+<script>
+$(document).ready(function (){
+    $('#product-save-button').click(function(){
+		var form = $('#wadev-save-product');
+		$.post(form.attr('action'), form.serialize(), function(r){
+		    if(r.status=='ok'){
+				$('#wadev-edit-product-dialog').remove();
+				location.reload();
+		    }else{
+			
+		    }
+		});
+		return false;
+    });
+    $('#product-delete-link').click(function(){
+		var product_id = $(this).attr('product_id');
+	    $.post('?module=product&action=delete',{ 'product_id':product_id }, function(r){
+			if(r.status=='ok'){
+		    	$('#wadev-products-tr-'+product_id).remove();
+		    	$('#wadev-edit-product-dialog').remove();
+			}
+	    });	
+	    return false;
+    });
+
+	$("#js-ibutton-1").iButton({
+	    labelOn: '[` Да`]',
+        labelOff: '[`Нет `]',
+
+    });
+	$("#js-ibutton-2").iButton({
+	    labelOn: '[` Да`]',
+        labelOff: '[`Нет `]',
+        className: 'mini'
+    });
+	$("#js-ibutton-3").iButton({
+	    labelOn: '[` Да`]',
+        labelOff: '[`Нет `]',
+        className: 'mini'
+    });
+});
+</script>

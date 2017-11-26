@@ -1,1 +1,44 @@
-Пустая заготовка
+<div id="wadev-products-page" class="double=padded block">
+	<h2>[`Products`]</h2>
+	{if $products}
+		<table class="zebra">
+		<tr>
+				<th>[`Name`]</th>
+				<th>[`Price`]</th>
+				<th>[`slug`]</th>
+				<th>[`Version`]</th>
+				<th>[`Lx2`]</th>
+				<th>[`P`]</th>
+		</tr>
+		{foreach $products as $p}
+			<tr id="wadev-products-tr-{$p.id}">
+				<td><a href="#" product_id="{$p.id}" class="wadev-products-editlink">{$p.name}</a></td>
+				<td>{$p.price}</td>
+				<td>{$p.slug}</td>
+				<td>{$p.current_version}</td>
+				<td>{$p.repeated_license}</td>
+				<td>{$p.partner}</td>
+			</tr>
+		{/foreach}
+		</table>
+	{else}
+		<div class="block double-padded align-center gray">
+			<strong>У вас пока нет ни одного продукта... =(</strong>
+		</div>		
+	{/if}
+	
+	<div class="clear"></div>
+	<div class="block">
+		<a class="wadev-products-editlink" href="#" product_id="new"><i class="icon16 add"></i>[`New product`]</a>
+		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+		<a class="wadev-products-sync" href="#"><i class="icon16 sync"></i>[`Load new products from Webasyst`]</a>
+	</div>
+	<div class="hr"></div>
+</div>
+<script>
+    (function ($) {
+        new ProductsPage({
+            $wrapper: $("#wadev-products-page"),
+        });
+    })(jQuery);
+</script>
