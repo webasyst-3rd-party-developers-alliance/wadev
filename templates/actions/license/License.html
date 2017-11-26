@@ -17,13 +17,31 @@
             </div>
             <div class="buttons field">
                 <div class="value">
-                    <button class="button green submit" type="submit">[`Search`]</button>
+                    <button class="button green submit" type="submit">[`Check`]</button>
                 </div>
             </div>
         </form>
     </div>
-</div>
+    <div class="error block"></div>
+    <div class="result block">
 
+    </div>
+</div>
+<script type="text/html" id="license-rows">
+{literal}
+    {% var licenses=o.licenses; %}
+    {% for(var i=0, n = licenses.length; i< n; i+=1) { %}
+        {% var lic = licenses[i]; %}
+        <tr>
+            <td>{%#lic.product%}</td>
+            <td>{%#lic.create_datetime%}</td>
+            <td>{%#lic.inst_datetime%}</td>
+            <td>{%#lic.order_id%}</td>
+            <td>{%#lic.leasing%}</td>
+        </tr>
+    {% } %}
+{/literal}
+</script>
 <script>
     (function ($) {
         new LicensePage({
