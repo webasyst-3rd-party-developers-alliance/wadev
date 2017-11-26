@@ -68,10 +68,11 @@ var LicensePage = (function ($) {
             that.is_locked = true;
             $.post(url, data, function (r) {
 
-                if (r.status === 'ok') {
-                    if (r.data && $.isArray(r.data) && r.data.length) {
-                        ShowLicenses(r.data, that.$result_block, that.locales);
+                if (r.status === 'ok' && r.data) {
+                    if (!$.isArray(r.data)) {
+                        r.data = [r.data];
                     }
+                    ShowLicenses(r.data, that.$result_block, that.locales);
                 }
 
             }).always(function () {
