@@ -1,0 +1,48 @@
+<div class="block paging" data-pagination>
+    <div class="c-page-list">
+        <span style="margin-right:20px;">[`Total`]: <span id="total-rows">{$total_rows}</span></span>
+        {$search_url_append=""}
+        {if !empty($search)}{$search_url_append="?search=`$search`"}{/if}
+
+        {if count($pagination) > 1}
+        <span>
+            {foreach $pagination as $page => $offset}
+            {if $offset !== false}
+                <a{if $current_page == $page} class="selected"{/if} href="{$wa_app_url}{$baseurl}{$offset}/{$limit}/{$search_url_append}">{$page}</a>
+            {else}
+                ...
+            {/if}
+            {/foreach}
+            {if $current_page != 1}
+                <a href="{$wa_app_url}{$baseurl}{$start-$limit}/{$limit}/{$search_url_append}"
+                   class="prevnext"><i class="icon10 larr"></i> пред</a>
+            {/if}
+            {if $current_page != $page}
+                <a href="{$wa_app_url}{$baseurl}{$start+$limit}/{$limit}/{$search_url_append}"
+                   class="prevnext">след <i class="icon10 rarr"></i></a>
+            {/if}
+            </span>
+        {/if}
+    </div>
+    <div class="c-page-num">[`Show`]
+        {$records_on_page = [10, 30, 50, 100, 200, 500]}
+        <select data-pagination-records>
+            {foreach $records_on_page as $onpage}
+            <option value="{$onpage}" {if $limit==$onpage} selected="selected" {/if}>{$onpage}</option>
+            {/foreach}
+        </select> [`rows`]
+    </div>
+    <div class="clear"></div>
+</div>
+
+<script>
+    (function () {
+        'use strict';
+
+        var $pagination = $('[data-pagination]');
+        $pagination.on('change', '[data-pagination-records]', function (e) {
+            var records = $(this).val();
+            $.wadev.router.load('{$wa_app_url}{$baseurl}0/' + records + '/{$search_url_append}');
+        });
+    }())
+</script>

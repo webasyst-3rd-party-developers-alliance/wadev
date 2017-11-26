@@ -1,0 +1,53 @@
+<div class="block padded" id="wadev-settings-page">
+    <div class="content-header">
+        <h1>[`Settings`]</h1>
+    </div>
+
+    <form method="post" class="wa-form">
+        <div class="field">
+            <div class="name">Ключ API</div>
+            <div class="value">
+                <input type="password" name="data[api_key]">
+                <br><span class="hint">[`Leave this fied blank if you don't want to change stored key`]</span>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">[`Refresh rate`]</div>
+            <div class="value">
+                <select name="data[refresh_rate]">
+                    {foreach [1,5,10,15,30,45,60] as $m}
+                        <option value="{$m}"{if !empty($settings['refresh_rate']) && $settings.refresh_rate == $m} selected{/if}>{$m} {_w('minute', 'minutes', $m)}</option>
+                    {/foreach}
+                </select>
+            </div>
+        </div>
+        <div class="field">
+            <div class="name">[`Reset`]</div>
+            <div class="value">
+                <input type="checkbox" class="wadev-ignore-change" id="wadev-settings-reset"><br>
+                <span class="hint"><i class="icon10 exclamation"></i>[`Be careful! Doors are closing!`]</span>{* @todo надо какое-нибудь предупреждение *}
+            </div>
+            <div class="value" style="display: none" id="wadev-reset-options">
+                <input type="checkbox" name="reset[transactions]" value="1"> [`Clear transactions`]<br>
+                <input type="checkbox" name="reset[promocodes]" value="1"> [`Clear promocodes`]<br>
+                <input type="checkbox" name="reset[products]" value="1"> [`Clear products`]
+            </div>
+        </div>
+        <div class="field buttons">
+            <button class="button green" type="submit">[`Save`]</button>
+        </div>
+    </form>
+</div>
+{* JS *}
+<script>
+    (function ($) {
+        new SettingsPage({
+            $wrapper: $("#wadev-settings-page"),
+            locales: {
+                saving: "[`Saving`]",
+                saved: "[`Saved`]"
+            }
+        });
+//        $.wadev.setTitle("[`Settings`]");
+    })(jQuery);
+</script>
