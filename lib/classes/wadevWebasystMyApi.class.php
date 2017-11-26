@@ -139,7 +139,7 @@ class wadevWebasystMyApi
         }
 
         if ($response['status'] == 'fail') {
-            if (isset($response['error'])) {
+            if (isset($response['errorы'])) {
                 if (is_string($response['error'])) {
                     throw new waException($response['error']);
                 }
