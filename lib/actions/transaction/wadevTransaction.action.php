@@ -17,7 +17,7 @@ class wadevTransactionAction extends wadevViewAction
 
         $transactions = wadevTransactionModel::model()->findAll($search, $start, $limit, $total_rows);
 
-        $balance = wa('wadev')->getConfig()->currentBalance((bool)$new_transactions_count);
+        $balance = wa('wadev')->getConfig()->currentBalance(true);
 
         wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
 
