@@ -14,16 +14,19 @@ return array(
     ),
     'wadev_promocode' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
-        'create_datetime' => array('datetime', 'null' => 0, 'default' => 'CURRENT_TIMESTAMP'),
-        'type' => array('varchar', 8, 'null' => 0, 'default' => 'single'),
+        'create_datetime' => array('datetime'),
+        'type' => array('enum', "'single','multi'", 'null' => 0, 'default' => 'single'),
         'code' => array('varchar', 64, 'null' => 0),
-        'start_date' => array('datetime'),
-        'end_date' => array('datetime'),
+        'start_date' => array('date'),
+        'end_date' => array('date'),
         'percent' => array('float', 'null' => 0),
         'description' => array('varchar', 256, 'null' => 0),
         'usage' => array('int', 11, 'null' => 0, 'default' => '0'),
+        'hash' => array('varchar', 32, 'null' => 0),
         ':keys' => array(
             'PRIMARY' => 'id',
+            'code' => 'code',
+            'hash' => 'hash',
         ),
     ),
     'wadev_promocode_products' => array(

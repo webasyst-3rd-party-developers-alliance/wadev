@@ -1,0 +1,48 @@
+<div class="block padded">
+    <div class="content-header">
+        <h1>[`Promocodes`]</h1>
+    </div>
+
+    {$promocodes|print_r}
+
+    <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
+
+    <form method="get" class="wa-form">
+        <div class="field">
+            <div class="name">[`Search`]</div>
+            <div class="value">
+                <input type="search" name="search" value="{$search|default:''|escape}">
+            </div>
+        </div>
+    </form>
+
+
+    <table class="zebra" data-transactions>
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>До</th>
+            <th>Сумма</th>
+            <th>После</th>
+            <th>Номер заказа</th>
+            <th>Комментарий</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+    </table>
+    {*include '../include.pagination.html'
+        baseurl='transaction/'
+        limit=$limit
+        search=$search
+        current_page=$current_page
+        pagination=$pagination
+        start=$start
+    inline*}
+</div>
+
+<script>
+    (function(){
+        'use strict';
+    })()
+</script>
