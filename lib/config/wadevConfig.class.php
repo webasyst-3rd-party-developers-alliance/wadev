@@ -112,10 +112,10 @@ class wadevConfig extends waAppConfig
 
     public function onCount()
     {
-        $new_transactions = 0;
+        $new_transactions = (int) $this->getSetting('new_transactions');
         $transaction = new wadevTransaction();
         if ($new_ones = $transaction->updateFromApi()) {
-            $new_transactions = (int) $this->getSetting('new_transactions') + $new_ones;
+            $new_transactions += $new_ones;
             $this->setSetting('new_transactions', $new_transactions);
         }
         return $new_transactions;
