@@ -43,10 +43,10 @@
         <tbody>
         {foreach $transactions as $transaction}
         <tr{if $transaction->amount < 0} class="red italic"{/if}>
-            <td class="small nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
-            <td class="align-right numerical small nobr">{$transaction->balance_before|wa_format_number:2}</td>
+            <td class="nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
+            <td class="align-right numerical nobr">{$transaction->balance_before|wa_format_number:2}</td>
             <td class="align-right numerical bold nobr">{$transaction->amount|wa_format_number:2}</td>
-            <td class="align-right numerical small nobr">{$transaction->balance_after|wa_format_number:2}</td>
+            <td class="align-right numerical nobr">{$transaction->balance_after|wa_format_number:2}</td>
             <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
             <td>{$transaction->comment|escape}</td>
         </tr>
