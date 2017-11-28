@@ -17,7 +17,7 @@ class wadevTransactionAction extends wadevViewAction
         $to = waRequest::get('to', '', waRequest::TYPE_STRING_TRIM);
         $total_rows = true;
 
-        /** @var wadevTransactionModel $transactions */
+        /** @var wadevTransactionModel[] $transactions */
         $transactions = wadevTransactionModel::model()->findAll(
             $search,
             [strtotime($from), strtotime($to)],
@@ -25,11 +25,16 @@ class wadevTransactionAction extends wadevViewAction
             $total_rows
         );
 
+        $total = ['plus' => 0, 'minus' => 0];
+        foreach ($transactions as $transaction) {
+            $total[$transaction->amount > 0 ? 'plus' : 'minus'] += $transaction->amount;
+        }
+
         $balance = wa('wadev')->getConfig()->currentBalance(true);
 
         wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
 
         $this->view->assign(compact('search', 'from', 'to'));
-        $this->view->assign(compact('balance', 'new_transactions_count', 'transactions'));
+        $this->view->assign(compact('balance', 'new_transactions_count', 'transactions', 'total'));
     }
 }

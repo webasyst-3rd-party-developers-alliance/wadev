@@ -50,6 +50,18 @@
             <td>{$transaction->comment|escape}</td>
         </tr>
         {/foreach}
+        {if $total}
+        <tr>
+            <td colspan="2">Всего на странице:</td>
+            <td class="align-right numerical bold">
+                {if $total.plus}<div class="nobr">{$total.plus|wa_format_number:2}</div>{/if}
+                {if $total.minus}<div class="nobr red italic">{$total.minus|wa_format_number:2}</div>{/if}
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {/if}
         </tbody>
     </table>
     {include '../include.pagination.html'
