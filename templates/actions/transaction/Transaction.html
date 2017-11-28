@@ -13,6 +13,18 @@
                 <input type="search" name="search" value="{$search|default:''|escape}">
             </div>
         </div>
+        <div class="field">
+            <div class="name">[`Dates`]</div>
+            <div class="value">
+                <input type="text" class="datepicker" name="from" value="{$from|default:''|escape}">
+                <input type="text" class="datepicker" name="to" value="{$to|default:''|escape}">
+            </div>
+        </div>
+        <div class="field">
+            <div class="value">
+                <input type="submit" class="small" value="[`filter`]"/>
+            </div>
+        </div>
     </form>
 
 
@@ -30,14 +42,26 @@
         <tbody>
         {foreach $transactions as $transaction}
         <tr{if $transaction->amount < 0} class="red italic"{/if}>
-            <td>{$transaction->datetime|wa_datetime:'humandatetime'}</td>
-            <td class="align-right numerical">{$transaction->balance_before|wa_format_number:2}</td>
-            <td class="align-right numerical bold">{$transaction->amount|wa_format_number:2}</td>
-            <td class="align-right numerical">{$transaction->balance_after|wa_format_number:2}</td>
+            <td class="small nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
+            <td class="align-right numerical small nobr">{$transaction->balance_before|wa_format_number:2}</td>
+            <td class="align-right numerical bold nobr">{$transaction->amount|wa_format_number:2}</td>
+            <td class="align-right numerical small nobr">{$transaction->balance_after|wa_format_number:2}</td>
             <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
             <td>{$transaction->comment|escape}</td>
         </tr>
         {/foreach}
+        {if $total}
+        <tr>
+            <td colspan="2">Всего на странице:</td>
+            <td class="align-right numerical bold">
+                {if $total.plus}<div class="nobr">{$total.plus|wa_format_number:2}</div>{/if}
+                {if $total.minus}<div class="nobr red italic">{$total.minus|wa_format_number:2}</div>{/if}
+            </td>
+            <td></td>
+            <td></td>
+            <td></td>
+        </tr>
+        {/if}
         </tbody>
     </table>
     {include '../include.pagination.html'
@@ -52,6 +76,7 @@
 
 <script>
     (function(){
+        // todo: уже нужен класс
         var $transaction_wrapper = $('[data-transactions]');
 
         $transaction_wrapper.on('click', '[data-order-id]', function (e) {
@@ -62,6 +87,29 @@
                 url: '?module=transaction&action=info&order_id=' + $this.data('order-id'),
                 'buttons': '<a href="#" class="cancel hint">Close</a>'
             });
-        })
+        });
+//        $.datepicker.setLocale('ru');
+        $('.datepicker').datepicker({
+            changeMonth : true,
+            changeYear : true,
+            shortYearCutoff: 2,
+            gotoCurrent: true,
+            constrainInput: false,
+
+            beforeShow : function() {
+                // hack! It's needed after-show-callback for changing z-index, but it doesn't exist
+                setTimeout(function() {
+                    // make min z-index 10
+                    var zIndex = $('#ui-datepicker-div').css('z-index');
+                    if (zIndex < 10) {
+                        $('#ui-datepicker-div').css('z-index', 10);
+                    }
+                }, 0);
+            }
+        });
+
+        // hide current datepicker by hardcoding style, because jquery.ui.datepicker
+        // has bag and doesn't hide calendar by oneself
+        $('#ui-datepicker-div').hide();
     })()
 </script>

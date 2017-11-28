@@ -27,6 +27,11 @@
         {$wa_app_static_url}js/vendors/tmpl.js
     {/wa_js}
 
+    {if $wa->locale()!='en'}
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/i18n/jquery.ui.datepicker-{$wa->locale()}.js"></script>
+    {/if}
+
+
     {wa_js file="js/compiled/wadev.min.js"}
         {$wa_app_static_url}js/wadev.js
         {$wa_app_static_url}js/settings.js
