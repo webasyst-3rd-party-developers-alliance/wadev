@@ -3,3 +3,4 @@ wadev.min.js
 /.project
 *.tar.gz
 *.min.js
+*.min.css
