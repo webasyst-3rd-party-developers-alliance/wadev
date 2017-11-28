@@ -27,3 +27,13 @@ try {
 } catch (waException $e) {
 
 }
+
+try {
+    $transaction_schema = $model->describe('wadev_promocode');
+
+    if (isset($transaction_schema['wadev_promocode']) && isset($transaction_schema['wadev_promocode']['default'])) {
+        $model->exec('ALTER TABLE `wadev_promocode` MODIFY `create_datetime` DATETIME');
+    }
+} catch (waException $e) {
+
+}
