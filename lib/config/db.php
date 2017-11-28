@@ -14,7 +14,7 @@ return array(
     ),
     'wadev_promocode' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
-        'create_datetime' => array('datetime', 'null' => 0, 'default' => 'CURRENT_TIMESTAMP'),
+        'create_datetime' => array('datetime', 'null' => 0),
         'type' => array('varchar', 8, 'null' => 0, 'default' => 'single'),
         'code' => array('varchar', 64, 'null' => 0),
         'start_date' => array('datetime'),
