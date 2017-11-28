@@ -2,6 +2,7 @@
     <p class="wadev-balance">[`Current account balance`]: <b>{$balance.balance|wa_currency_html:$balance.currency}</b>. {if !empty($balance['error'])}<br><span class="error">{$balance.error}</span>{/if}</p>
     <div class="content-header">
         <h1>[`Transactions`]</h1>
+        {if $last_update}<span class="hint">[`last sync:`] {$last_update|wa_datetime:'humandatetime'}</span>{/if}
     </div>
 
     <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->

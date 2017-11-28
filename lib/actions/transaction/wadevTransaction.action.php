@@ -6,6 +6,7 @@ class wadevTransactionAction extends wadevViewAction
     {
         $t = new wadevTransaction(new wadevTransactionModel());
         $new_transactions_count = $t->updateFromApi();
+        $last_update = (int)wa('wadev')->getConfig()->getSetting('api.transactions');
 
         // удалим инфу о новых
         (new waAppSettingsModel())->set('wadev', 'new_transactions', 0);
@@ -35,6 +36,6 @@ class wadevTransactionAction extends wadevViewAction
         wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
 
         $this->view->assign(compact('search', 'from', 'to'));
-        $this->view->assign(compact('balance', 'new_transactions_count', 'transactions', 'total'));
+        $this->view->assign(compact('balance', 'new_transactions_count', 'transactions', 'total', 'last_update'));
     }
 }

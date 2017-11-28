@@ -20,6 +20,8 @@
             this.highlightMenu();
             this.handlers();
             this.events();
+
+            $('#wa-app').trigger('inited.wadev');
         },
         highlightMenu: function (menu, el) {
             var $menu = menu ? $(menu) : $($.wadev.sidebar),
@@ -45,9 +47,9 @@
         },
         setTitle: function (title) {
             var h1 = $('.content-header h1');
-            title = title || (h1.length ? h1.text() : '') || $.wadev.app_name;
+            title = title || (h1.length ? h1.text() : '');
 
-            document.title = title + ' — ' + $.wadev.account_name;
+            document.title = title + ' — ' + this.app_name + ' — ' + this.account_name;
         },
         handlers: function () {
         },
