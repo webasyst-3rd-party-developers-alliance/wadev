@@ -92,6 +92,11 @@
         });
         $('#date-range').dateRangePicker({
             separator: '[` to `]',
+            endDate: '{date('Y-m-d')}',
+            startOfWeek: 'monday',
+            autoclose: true,
+            monthSelect:true,
+            yearSelect: true,
             getValue: function () {
                 $('[name=from]', '#date-range').val() && $('[name=to]', '#date-range').val() ? $('[name=from]', '#date-range').val() + '[` to `]' + $('[name=to]', '#date-range').val() : '';
             },
