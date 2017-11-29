@@ -89,6 +89,7 @@
                 url: '?module=transaction&action=info&order_id=' + $this.data('order-id'),
                 'buttons': '<a href="#" class="cancel hint">Close</a>'
             });
+            return false;
         });
         $('#date-range').dateRangePicker({
             separator: '[` to `]',
