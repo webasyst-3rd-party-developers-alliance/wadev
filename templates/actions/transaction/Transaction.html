@@ -16,7 +16,7 @@
         </div>
         <div class="field">
             <div class="name">[`Dates`]</div>
-            <div class="value">
+            <div class="value" id="date-range">
                 <input type="text" class="datepicker" name="from" value="{$from|default:''|escape}">
                 <input type="text" class="datepicker" name="to" value="{$to|default:''|escape}">
             </div>
@@ -78,6 +78,7 @@
 <script>
     (function(){
         // todo: уже нужен класс
+        // сделаем на днях :-)
         var $transaction_wrapper = $('[data-transactions]');
 
         $transaction_wrapper.on('click', '[data-order-id]', function (e) {
@@ -89,23 +90,19 @@
                 'buttons': '<a href="#" class="cancel hint">Close</a>'
             });
         });
-//        $.datepicker.setLocale('ru');
-        $('.datepicker').datepicker({
-            changeMonth : true,
-            changeYear : true,
-            shortYearCutoff: 2,
-            gotoCurrent: true,
-            constrainInput: false,
-
-            beforeShow : function() {
-                // hack! It's needed after-show-callback for changing z-index, but it doesn't exist
-                setTimeout(function() {
-                    // make min z-index 10
-                    var zIndex = $('#ui-datepicker-div').css('z-index');
-                    if (zIndex < 10) {
-                        $('#ui-datepicker-div').css('z-index', 10);
-                    }
-                }, 0);
+        $('#date-range').dateRangePicker({
+            separator: '[` to `]',
+            endDate: '{date('Y-m-d')}',
+            startOfWeek: 'monday',
+            autoclose: true,
+            monthSelect:true,
+            yearSelect: true,
+            getValue: function () {
+                $('[name=from]', '#date-range').val() && $('[name=to]', '#date-range').val() ? $('[name=from]', '#date-range').val() + '[` to `]' + $('[name=to]', '#date-range').val() : '';
+            },
+            setValue: function (s, s1, s2) {
+                $('[name=from]', '#date-range').val(s1);
+                $('[name=to]', '#date-range').val(s2);
             }
         });
 
