@@ -1,0 +1,140 @@
+@import "variables";
+@import "css3-mixins";
+
+.w-dialog-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-sizing: border-box;
+  background: #fff;
+  border: 1px solid #888;
+  border-radius: 2px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.13);
+
+  &.is-full-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    border: 0;
+    border-radius: 0;
+    box-shadow: none;
+
+    .w-dialog-background {
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      position: absolute;
+      box-sizing: border-box;
+      background: rgba(255, 255, 255, .8);
+    }
+
+    .w-dialog-block {
+      position: absolute;
+      box-sizing: border-box;
+      background: #fff;
+      border: 5px solid #f3f3f3;
+      border-radius: 4px;
+      box-shadow: 0 0 70px #bbb;
+
+      &.is-animated {
+        transition: all 200ms linear;
+      }
+
+      form {
+        overflow: visible;
+      }
+    }
+  }
+
+  .w-dialog-block {
+    .w-dialog-header {
+      padding: $padding ($padding * 2) $padding ($padding * 2);
+    }
+
+    .w-dialog-content {
+      padding: 0 ($padding * 2);
+
+      .is-long-content {
+        overflow: auto;
+        box-sizing: border-box;
+      }
+    }
+
+    &.gray-header {
+
+      .w-dialog-header {
+        background-color: #f3f3f3;
+      }
+
+      h1 {
+        @include text-shadow(1px, 1px, 0, white);
+
+        .hint {
+          font-weight: 400;
+          text-transform: lowercase;
+        }
+      }
+    }
+    &.compact-header {
+      .w-dialog-header {
+        padding: $padding/2 $padding*2 $padding/2 $padding*2;
+      }
+    }
+
+    .w-dialog-content {
+      padding-top: $padding;
+      border-bottom: 1px solid #f3f3f3;
+    }
+  }
+
+  .w-dialog-footer {
+    margin: 2em 0 0;
+    padding: 0 ($padding * 2) ($padding * 2) ($padding * 2);
+
+    .icon16 {
+      vertical-align: baseline;
+      position: relative;
+      top: 3px;
+      margin: 0 0 0 4px;
+    }
+
+    .w-actions {
+      .w-table-layout {
+        .w-column {
+          vertical-align: middle;
+        }
+      }
+
+      .w-button {
+        display: inline-block;
+        vertical-align: middle;
+        margin: 0 0 0 1em;
+        cursor: pointer;
+
+        &:first-child {
+          margin-left: 0;
+        }
+
+        .icon16 {
+          position: relative;
+          top: 3px;
+          vertical-align: baseline;
+        }
+      }
+    }
+  }
+}
+
+.w-view-order-dialog {
+  .w-dialog-block {
+
+    max-width: 950px;
+    .w-dialog-content {
+      overflow: auto;
+    }
+  }
+}
