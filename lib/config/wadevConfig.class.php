@@ -99,6 +99,14 @@ class wadevConfig extends waAppConfig
     }
 
     /**
+     * @return wadevWebasystMyApi
+     */
+    public function getWebasystMyApi()
+    {
+        return new wadevWebasystMyApi($this->getSetting('api_key'));
+    }
+
+    /**
      * @return waAppSettingsModel
      */
     protected function getAppSettingsModel()
