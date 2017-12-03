@@ -68,8 +68,9 @@
 .w-dialog-wrapper .w-dialog-footer .w-actions .w-button:first-child { margin-left: 0; }
 .w-dialog-wrapper .w-dialog-footer .w-actions .w-button .icon16 { position: relative; top: 3px; vertical-align: baseline; }
 
-.w-view-order-dialog .w-dialog-block { max-width: 950px; }
+.w-view-order-dialog .w-dialog-block { min-width: 450px; min-height: 200px; max-width: 950px; }
 .w-view-order-dialog .w-dialog-block .w-dialog-content { overflow: auto; }
+.w-view-order-dialog .w-dialog-block .w-dialog-content div.error { margin: 1em 0; border: 1px solid firebrick; color: firebrick; font-weight: 600; font-size: 16px; text-shadow: 1px 1px 0 white; background-color: #f8dbdb; padding: 1em; }
 
 table.wadev { border: 1px solid #ddd; border-spacing: 0; border-collapse: collapse; width: 100%; }
 table.wadev th { padding: 5px; background-color: #ddd; }
