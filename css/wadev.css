@@ -85,3 +85,5 @@ td.min-width, th.min-width { width: 1%; }
 .w-table-layout { display: table; width: 100%; }
 .w-table-layout > .w-column { display: table-cell; vertical-align: top; }
 .w-table-layout > .w-column.right { text-align: right; }
+
+div.loading128 { width: 128px; height: 128px; margin: 0 auto; padding-bottom: 2em; background: transparent url(../img/loading128.gif) no-repeat fixed center; }

@@ -1,66 +1,67 @@
-<div class="w-dialog-wrapper is-full-screen w-view-order-dialog" id="w-view-order">
-    <div class="w-dialog-background"></div>
-    <div class="w-dialog-block gray-header compact-header">
-        <header class="w-dialog-header">
-            <h1>[`Order`] {if !empty($order['id'])}{$order.id|escape}{/if}{if !empty($order['status'])} <span class="hint">{$order.status}</span>{/if}</h1>
-        </header>
-        <div class="w-dialog-content">
-            {$discounts = ifset($order, 'discounts', [])}
-            {if !empty($discounts)}
-                <h2>[`Discounts`]</h2>
-                <ul>
-                    {foreach $discounts as $d}
-                        <li>{$d.type}{if isset($d['code'])} код <b>{$d.code}</b>{/if} &mdash; {$d.percent}%</li>
-                    {/foreach}
-                </ul>
-            {/if}
-            {$transactions = ifempty($order, 'transactions', [])}
-            {if !empty($transactions)}
-                <h2>[`Transactions`]</h2>
-                <table class="wadev">
-                    <thead><tr> <th class="align-left">[`Date`]</th><th class="align-left min-width">[`Sum`]</th><th class="align-left">[`Comment`]</th></tr></thead>
-                    {foreach $transactions as $t}
-                        <tr>
-                            <td>{$t.datetime|wa_date:'humandatetime'}</td>
-                            <td class="align-right money">{$t.amount|wa_currency:$t.currency}</td>
-                            <td>{$t.comment|escape}</td>
-                        </tr>
-                    {/foreach}
-                </table>
-            {/if}
-            {$licenses = ifempty($order, 'licenses', [])}
-            {if !empty($licenses)}
-                <h2>[`Licenses`]</h2>
-                <table class="wadev">
-                    <thead>
-                    <tr><th class="align-left">[`Product`]</th><th class="align-left">[`Domain`]</th><th class="align-left">[`Install Date`]</th></tr>
-                    </thead>
-                    <tbody>
-                    {foreach $licenses as $l}
-                        <tr>
-                            <td>{$l.product|escape}</td>
-                            <td>{$l.domain|escape}</td>
-                            <td>{$l.inst_datetime|wa_date:'humandatetime'}</td>
-                        </tr>
-                    {/foreach}
-                    </tbody>
-                </table>
-            {/if}
-            {if !empty($error)}
-                <div class="error">
-                    {$error}
-                </div>
-            {/if}
+{function discount type=''}{strip}
+    {$types = ['promocode' => 'Промо-код', 'partner'=>'Скидка партнеру', 'repeate_buy'=>'На повторную лицензию', 'special_offer'=>'По программе скидок Вебассист']}
+    {if $type}
+        {if !empty($types[$type])}{$types[$type]}{else}{$type}{/if}
+    {/if}
+{/strip}{/function}
+<header class="w-dialog-header">
+    <h1>[`Order`] {if !empty($order['id'])}{$order.id|escape}{/if}{if !empty($order['status'])} <span class="hint">{$order.status}</span>{/if}</h1>
+</header>
+<div class="w-dialog-content">
+    {$discounts = ifset($order, 'discounts', [])}
+    {if !empty($discounts)}
+        <h2>[`Discounts`]</h2>
+        <ul>
+            {foreach $discounts as $d}
+                <li>{discount type=$d.type}{if isset($d['code'])} <b>{$d.code}</b>{/if} &mdash; {$d.percent}%</li>
+            {/foreach}
+        </ul>
+    {/if}
+    {$transactions = ifempty($order, 'transactions', [])}
+    {if !empty($transactions)}
+        <h2>[`Transactions`]</h2>
+        <table class="wadev">
+            <thead><tr> <th class="align-left">[`Date`]</th><th class="align-left min-width">[`Sum`]</th><th class="align-left">[`Comment`]</th></tr></thead>
+            {foreach $transactions as $t}
+                <tr>
+                    <td>{$t.datetime|wa_date:'humandatetime'}</td>
+                    <td class="align-right money">{$t.amount|wa_currency:$t.currency}</td>
+                    <td>{$t.comment|escape}</td>
+                </tr>
+            {/foreach}
+        </table>
+    {/if}
+    {$licenses = ifempty($order, 'licenses', [])}
+    {if !empty($licenses)}
+        <h2>[`Licenses`]</h2>
+        <table class="wadev">
+            <thead>
+            <tr><th class="align-left">[`Product`]</th><th class="align-left">[`Domain`]</th><th class="align-left">[`Install Date`]</th></tr>
+            </thead>
+            <tbody>
+            {foreach $licenses as $l}
+                <tr>
+                    <td>{$l.product|escape}</td>
+                    <td>{if !empty($l.domain)}<a href="http://{$l.domain|escape}" target="_blank">{$l.domain|escape} <i class="icon10 new-window"></i></a>{/if}</td>
+                    <td>{$l.inst_datetime|wa_date:'humandatetime'}</td>
+                </tr>
+            {/foreach}
+            </tbody>
+        </table>
+    {/if}
+    {if !empty($error)}
+        <div class="error">
+            {$error}
         </div>
-        <footer class="w-dialog-footer">
-            <div class="w-actions">
-                <div class="w-table-layout">
-                    <div class="w-column">
-                        <button type="button" class="button js-close-dialog w-button">[`Close`]</button>
-                        {*<a href="javascript:void(0)" class="js-close-dialog">[`Close`]</a>*}
-                    </div>
-                </div>
-            </div>
-        </footer>
-    </div>
+    {/if}
 </div>
+<footer class="w-dialog-footer">
+    <div class="w-actions">
+        <div class="w-table-layout">
+            <div class="w-column">
+                <button type="button" class="button js-close-dialog w-button">[`Close`]</button>
+                {*<a href="javascript:void(0)" class="js-close-dialog">[`Close`]</a>*}
+            </div>
+        </div>
+    </div>
+</footer>
