@@ -306,3 +306,225 @@ var WadevRouter = (function ($) {
 
     return WadevRouter;
 })(jQuery);
+
+var WadevDialog = (function($){
+    "use strict";
+
+    WadevDialog = function(options){
+        const that = this;
+
+        // DOM
+        that.$wrapper = $(options["html"]);
+        that.$block = false;
+        that.is_full_screen = ( that.$wrapper.hasClass("is-full-screen") );
+        if (that.is_full_screen) {
+            that.$block = that.$wrapper.find(".t-dialog-block");
+        }
+
+        // VARS
+        that.position = ( options["position"] || false );
+
+        // DYNAMIC VARS
+        that.is_closed = false;
+
+        //
+        that.userPosition = ( options["setPosition"] || false );
+
+        // HELPERS
+        that.onBgClick = ( options["onBgClick"] || false );
+        that.onOpen = ( options["onOpen"] || function() {} );
+        that.onClose = ( options["onClose"] || function() {} );
+        that.onRefresh = ( options["onRefresh"] || false );
+        that.onResize = ( options["onResize"] || false );
+
+        // INIT
+        that.initClass();
+    };
+
+    WadevDialog.prototype.initClass = function() {
+        const that = this;
+        // save link on dialog
+        that.$wrapper.data("wadevDialog", that);
+        //
+        that.show();
+        //
+        that.bindEvents();
+    };
+
+    WadevDialog.prototype.bindEvents = function() {
+        var that = this,
+            $document = $(document),
+            $block = (that.$block) ? that.$block : that.$wrapper;
+
+        // Delay binding close events so that dialog does not close immidiately
+        // from the same click that opened it.
+        setTimeout(function() {
+
+            $document.on("click", close);
+            $document.on("wa_before_load", close);
+            that.$wrapper.on("close", close);
+
+            // Click on background, default nothing
+            if (that.is_full_screen) {
+                that.$wrapper.on("click", ".t-dialog-background", function(event) {
+                    if (!that.onBgClick) {
+                        event.stopPropagation();
+                    } else {
+                        that.onBgClick(event);
+                    }
+                });
+            }
+
+            $block.on("click", function(event) {
+                event.stopPropagation();
+            });
+
+            $(document).on("keyup", function(event) {
+                var escape_code = 27;
+                if (event.keyCode === escape_code) {
+                    that.close();
+                }
+            });
+
+            $block.on("click", ".js-close-dialog", function() {
+                close();
+            });
+
+            function close() {
+                if (!that.is_closed) {
+                    that.close();
+                }
+                $document.off("click", close);
+                $document.off("wa_before_load", close);
+            }
+
+            if (that.is_full_screen) {
+                $(window).on("resize", onResize);
+            }
+
+            function onResize() {
+                var is_exist = $.contains(document, that.$wrapper[0]);
+                if (is_exist) {
+                    that.resize();
+                } else {
+                    $(window).off("resize", onResize);
+                }
+            }
+
+        }, 0);
+
+        WadevDialog.prototype.show = function() {
+            var that = this;
+
+            $("body").append( that.$wrapper );
+
+            //
+            that.setPosition();
+            //
+            that.onOpen(that.$wrapper, that);
+        };
+
+        WadevDialog.prototype.setPosition = function() {
+            var that = this,
+                $window = $(window),
+                window_w = $window.width(),
+                window_h = (that.is_full_screen) ? $window.height() : $(document).height(),
+                $block = (that.$block) ? that.$block : that.$wrapper,
+                wrapper_w = $block.outerWidth(),
+                wrapper_h = $block.outerHeight(),
+                pad = 10,
+                css;
+
+            if (that.position) {
+                css = that.position;
+
+            } else {
+                var getPosition = (that.userPosition) ? that.userPosition : getDefaultPosition;
+                css = getPosition({
+                    width: wrapper_w,
+                    height: wrapper_h
+                });
+            }
+
+            if (css.left > 0) {
+                if (css.left + wrapper_w > window_w) {
+                    css.left = window_w - wrapper_w - pad;
+                }
+            }
+
+            if (css.top > 0) {
+                if (css.top + wrapper_h > window_h) {
+                    css.top = window_h - wrapper_h - pad;
+                }
+            } else {
+                css.top = pad;
+
+                if (that.is_full_screen) {
+                    var $content = $block.find(".t-dialog-content");
+
+                    $content.hide();
+
+                    var block_h = $block.outerHeight(),
+                        content_h = window_h - block_h - pad * 2;
+
+                    $content
+                        .height(content_h)
+                        .addClass("is-long-content")
+                        .show();
+
+                }
+            }
+
+            $block.css(css);
+
+            function getDefaultPosition( area ) {
+                // var scrollTop = $(window).scrollTop();
+
+                return {
+                    left: parseInt( (window_w - area.width)/2 ),
+                    top: parseInt( (window_h - area.height)/2 ) // + scrollTop
+                };
+            }
+        };
+
+        WadevDialog.prototype.close = function() {
+            var that = this;
+            //
+            that.is_closed = true;
+            //
+            that.$wrapper.remove();
+            //
+            that.onClose(that.$wrapper, that);
+        };
+
+        WadevDialog.prototype.refresh = function() {
+            var that = this;
+
+            if (that.onRefresh) {
+                //
+                that.onRefresh();
+                //
+                that.close();
+            }
+        };
+
+        WadevDialog.prototype.resize = function() {
+            var that = this,
+                animate_class = "is-animated",
+                do_animate = true;
+
+            if (do_animate) {
+                that.$block.addClass(animate_class);
+            }
+
+            that.setPosition();
+
+            if (that.onResize) {
+                that.onResize(that.$wrapper, that);
+            }
+        };
+
+        return WadevDialog;
+    };
+
+})(jQuery);
