@@ -41,4 +41,49 @@
 /*/datetimepicker*/
 .field .value input[type="text"].datepicker { max-width: 100px; min-width: 100px; }
 
+/* ------------------------------------------------------------- Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+ List of CSS3 Sass Mixins File to be @imported and @included as you need
+ The purpose of this library is to facilitate the use of CSS3 on different browsers avoiding HARD TO READ and NEVER ENDING css files
+ note: All CSS3 Properties are being supported by Safari 5 more info: http://www.findmebyip.com/litmus/#css3-properties
+
+------------------------------------------------------------- */
+.w-dialog-wrapper { position: absolute; top: 0; left: 0; box-sizing: border-box; background: #fff; border: 1px solid #888; border-radius: 2px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.13); }
+.w-dialog-wrapper.is-full-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.w-dialog-wrapper.is-full-screen .w-dialog-background { top: 0; left: 0; width: 100%; height: 100%; position: absolute; box-sizing: border-box; background: rgba(255, 255, 255, 0.8); }
+.w-dialog-wrapper.is-full-screen .w-dialog-block { position: absolute; box-sizing: border-box; background: #fff; border: 5px solid #f3f3f3; border-radius: 4px; box-shadow: 0 0 70px #bbb; }
+.w-dialog-wrapper.is-full-screen .w-dialog-block.is-animated { transition: all 200ms linear; }
+.w-dialog-wrapper.is-full-screen .w-dialog-block form { overflow: visible; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-header { padding: 14px 28px 14px 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content { padding: 0 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content .is-long-content { overflow: auto; box-sizing: border-box; }
+.w-dialog-wrapper .w-dialog-block.gray-header .w-dialog-header { background-color: #f3f3f3; }
+.w-dialog-wrapper .w-dialog-block.gray-header h1 { text-shadow: 1px 1px 0 white; }
+.w-dialog-wrapper .w-dialog-block.gray-header h1 .hint { font-weight: 400; text-transform: lowercase; }
+.w-dialog-wrapper .w-dialog-block.compact-header .w-dialog-header { padding: 7px 28px 7px 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content { padding-top: 14px; border-bottom: 1px solid #f3f3f3; }
+.w-dialog-wrapper .w-dialog-footer { margin: 2em 0 0; padding: 0 28px 28px 28px; }
+.w-dialog-wrapper .w-dialog-footer .icon16 { vertical-align: baseline; position: relative; top: 3px; margin: 0 0 0 4px; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-table-layout .w-column { vertical-align: middle; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button { display: inline-block; vertical-align: middle; margin: 0 0 0 1em; cursor: pointer; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button:first-child { margin-left: 0; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button .icon16 { position: relative; top: 3px; vertical-align: baseline; }
+
+.w-view-order-dialog .w-dialog-block { min-width: 450px; min-height: 200px; max-width: 950px; }
+.w-view-order-dialog .w-dialog-block .w-dialog-content { overflow: auto; }
+.w-view-order-dialog .w-dialog-block .w-dialog-content div.error { margin: 1em 0; border: 1px solid firebrick; color: firebrick; font-weight: 600; font-size: 16px; text-shadow: 1px 1px 0 white; background-color: #f8dbdb; padding: 1em; }
+
+table.wadev { border: 1px solid #ddd; border-spacing: 0; border-collapse: collapse; width: 100%; }
+table.wadev th { padding: 5px; background-color: #ddd; }
+table.wadev td { padding: 8px 5px; border-bottom: 1px solid #ddd; }
+
+td.min-width, th.min-width { width: 1%; }
+
 .nobr { white-space: nowrap; }
+
+.money { font-weight: 600; color: #060; white-space: nowrap; }
+
+.w-table-layout { display: table; width: 100%; }
+.w-table-layout > .w-column { display: table-cell; vertical-align: top; }
+.w-table-layout > .w-column.right { text-align: right; }
+
+div.loading128 { width: 128px; height: 128px; margin: 0 auto; padding-bottom: 2em; background: transparent url(../img/loading128.gif) no-repeat fixed center; }

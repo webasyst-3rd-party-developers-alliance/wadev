@@ -83,12 +83,8 @@
 
         $transaction_wrapper.on('click', '[data-order-id]', function (e) {
             e.preventDefault();
-            var $this = $(this);
-
-            $('<div>').waDialog({
-                url: '?module=transaction&action=info&order_id=' + $this.data('order-id'),
-                'buttons': '<a href="#" class="cancel hint">Close</a>'
-            });
+            var order_id = $(this).data('order-id');
+            if(order_id) new OrderDialog({ order_id: order_id });
             return false;
         });
         $('#date-range').dateRangePicker({

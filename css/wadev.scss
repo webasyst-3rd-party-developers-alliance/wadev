@@ -1,5 +1,35 @@
 @import "../.dist/scss/datepicker";
+@import "../.dist/scss/dialogs";
+@import "../.dist/scss/table";
 
 .nobr {
   white-space: nowrap;
+}
+
+.money {
+  font-weight: 600;
+  color:#060;
+  white-space: nowrap;
+}
+
+.w-table-layout {
+  display: table;
+  width: 100%;
+
+  >.w-column {
+    display: table-cell;
+    vertical-align: top;
+
+    &.right {
+      text-align: right;
+    }
+  }
+}
+
+div.loading128 {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  padding-bottom: 2em;
+  background: transparent url(../img/loading128.gif) no-repeat fixed center;
 }

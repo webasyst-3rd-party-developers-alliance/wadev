@@ -1,8 +1,8 @@
 "use strict";
 
-window.LicensePage = (function ($) {
+var LicensePage = (function ($) {
 
-    window.LicensePage = function (options) {
+    LicensePage = function (options) {
         var that = this;
 
         that.$wrapper = options["$wrapper"];
@@ -30,6 +30,13 @@ window.LicensePage = (function ($) {
 
     LicensePage.prototype.bindEvents = function () {
         var that = this;
+
+        that.$result_block.on('click', '.js-order-dialog', function(e){
+            e.preventDefault();
+            const order_id = $(this).data('order-id');
+            if(order_id) new OrderDialog({order_id:order_id});
+            return false;
+        });
 
         that.$form.on("submit", function (event) {
             event.preventDefault();
