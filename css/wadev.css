@@ -78,6 +78,15 @@ table.wadev td { padding: 8px 5px; border-bottom: 1px solid #ddd; }
 
 td.min-width, th.min-width { width: 1%; }
 
+.w-transaction-filter { box-sizing: border-box; }
+
+@media (min-width: 1200px) { .w-transaction-filter { float: right; width: 300px; padding: 7px; background-color: aliceblue; border-radius: 5px; }
+  .w-transaction-filter .wa-form { padding: 7px; border: 1px dashed cadetblue; border-radius: 5px; }
+  .w-transaction-filter .field:first-child { padding-top: 0; }
+  .w-transaction-filter .field .name { float: none; width: 100%; padding: 0; margin-top: 0.5em; line-height: 125%; }
+  .w-transaction-filter .field .value { margin: 0; }
+  .w-transaction-filter .field .value input[type=search] { width: 100%; }
+  .w-transaction-list { margin-right: 314px; } }
 .nobr { white-space: nowrap; }
 
 .money { font-weight: 600; color: #060; white-space: nowrap; }

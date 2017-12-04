@@ -1,0 +1,48 @@
+@import "variables";
+
+.w-transaction-filter {
+  box-sizing: border-box;
+}
+
+@include large-desktop {
+  .w-transaction-filter {
+    float: right;
+    width: 300px;
+    padding: $padding/2;
+    background-color: aliceblue;
+    border-radius: 5px;
+
+    .wa-form {
+      padding: $padding/2;
+      border: 1px dashed cadetblue;
+      border-radius: 5px;
+    }
+
+    .field {
+      &:first-child {
+        padding-top: 0;
+      }
+      .name {
+
+        float: none;
+        width: 100%;
+        padding: 0;
+        margin-top: 0.5em;
+        line-height: 125%;
+      }
+
+      .value {
+        margin: 0;
+
+        input[type=search] {
+          width: 100%;
+        }
+      }
+    }
+
+  }
+
+  .w-transaction-list {
+    margin-right: 300px+$padding;
+  }
+}

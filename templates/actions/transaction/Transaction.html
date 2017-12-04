@@ -6,73 +6,77 @@
     </div>
 
     <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
-
-    <form method="get" class="wa-form">
-        <div class="field">
-            <div class="name">[`Search`]</div>
-            <div class="value">
-                <input type="search" name="search" value="{$search|default:''|escape}">
-            </div>
+    <div class="row-wrapper">
+        <div class="w-transaction-filter">
+            <form method="get" class="wa-form">
+                <div class="field">
+                    <div class="name">[`Search`]</div>
+                    <div class="value">
+                        <input type="search" name="search" value="{$search|default:''|escape}">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="name">[`Dates`]</div>
+                    <div class="value" id="date-range">
+                        <input type="text" class="datepicker" name="from" value="{$from|default:''|escape}">
+                        <input type="text" class="datepicker" name="to" value="{$to|default:''|escape}">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="value">
+                        <input type="submit" class="small" value="[`filter`]"/>
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="field">
-            <div class="name">[`Dates`]</div>
-            <div class="value" id="date-range">
-                <input type="text" class="datepicker" name="from" value="{$from|default:''|escape}">
-                <input type="text" class="datepicker" name="to" value="{$to|default:''|escape}">
-            </div>
-        </div>
-        <div class="field">
-            <div class="value">
-                <input type="submit" class="small" value="[`filter`]"/>
-            </div>
-        </div>
-    </form>
 
-
-    <table class="zebra" data-transactions>
-        <thead>
-        <tr>
-            <th>Дата</th>
-            <th>До</th>
-            <th>Сумма</th>
-            <th>После</th>
-            <th>Номер заказа</th>
-            <th>Комментарий</th>
-        </tr>
-        </thead>
-        <tbody>
-        {foreach $transactions as $transaction}
-        <tr{if $transaction->amount < 0} class="red italic"{/if}>
-            <td class="nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
-            <td class="align-right numerical nobr">{$transaction->balance_before|wa_format_number:2}</td>
-            <td class="align-right numerical bold nobr">{$transaction->amount|wa_format_number:2}</td>
-            <td class="align-right numerical nobr">{$transaction->balance_after|wa_format_number:2}</td>
-            <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
-            <td>{$transaction->comment|escape}</td>
-        </tr>
-        {/foreach}
-        {if $total}
-        <tr>
-            <td colspan="2">Всего на странице:</td>
-            <td class="align-right numerical bold">
-                {if $total.plus}<div class="nobr">{$total.plus|wa_format_number:2}</div>{/if}
-                {if $total.minus}<div class="nobr red italic">{$total.minus|wa_format_number:2}</div>{/if}
-            </td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        {/if}
-        </tbody>
-    </table>
-    {include '../include.pagination.html'
-        baseurl='transaction/'
-        limit=$limit
-        search=$search
-        current_page=$current_page
-        pagination=$pagination
-        start=$start
-    inline}
+        <div class="w-transaction-list">
+            <table class="zebra" data-transactions>
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>До</th>
+                    <th>Сумма</th>
+                    <th>После</th>
+                    <th>Номер заказа</th>
+                    <th>Комментарий</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $transactions as $transaction}
+                <tr{if $transaction->amount < 0} class="red italic"{/if}>
+                    <td class="nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
+                    <td class="align-right numerical nobr">{$transaction->balance_before|wa_format_number:2}</td>
+                    <td class="align-right numerical bold nobr">{$transaction->amount|wa_format_number:2}</td>
+                    <td class="align-right numerical nobr">{$transaction->balance_after|wa_format_number:2}</td>
+                    <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
+                    <td>{$transaction->comment|escape}</td>
+                </tr>
+                {/foreach}
+                {if $total}
+                <tr>
+                    <td colspan="2">Всего на странице:</td>
+                    <td class="align-right numerical bold">
+                        {if $total.plus}<div class="nobr">{$total.plus|wa_format_number:2}</div>{/if}
+                        {if $total.minus}<div class="nobr red italic">{$total.minus|wa_format_number:2}</div>{/if}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {/if}
+                </tbody>
+            </table>
+            {include '../include.pagination.html'
+                baseurl='transaction/'
+                limit=$limit
+                search=$search
+                current_page=$current_page
+                pagination=$pagination
+                start=$start
+            inline}
+        </div>
+    </div>
 </div>
 
 <script>
