@@ -64,3 +64,14 @@ div.loading128 {
     border-bottom: 1px solid #ccc;
   }
 }
+
+.block {
+  &.alert {
+    color: #856404;
+    border: 1px solid darken(#ffeeba, 5%);
+    background-color: #fff3cd;
+    border-radius: $padding/3;
+    padding: $padding;
+    margin: $padding/2 0;
+  }
+}

@@ -44,25 +44,6 @@ var LicensePage = (function ($) {
         });
     };
 
-    function l10n(str, locales) {
-        return (locales[str] || str);
-    }
-
-    function ShowLicenses(data, $result, locales) {
-        $result.empty();
-
-        var $table = $('<table class="zebra"><thead><tr></tr></thead><tbody></tbody></table>');
-        $('thead  tr', $table).append('<th>' + l10n('Product', locales) + '</th>')
-            .append('<th>' + l10n('Issued', locales) + '</th>')
-            .append('<th>' + l10n('Installed', locales) + '</th>')
-            .append('<th>' + l10n('Order', locales) + '</th>')
-            .append('<th class="min-width">' + l10n('Leased', locales) + '</th>');
-
-        $('tbody', $table).append(tmpl('license-rows', {licenses: data}));
-
-        $result.append($table);
-    }
-
     LicensePage.prototype.submit = function ($form) {
         var that = this,
             url = $.wadev.app_url + "?module=license&action=check",
@@ -73,15 +54,9 @@ var LicensePage = (function ($) {
 
         if (!that.is_locked) {
             that.is_locked = true;
-            $.post(url, data, function (r) {
-
-                if (r.status === 'ok' && r.data) {
-                    if (!$.isArray(r.data)) {
-                        r.data = [r.data];
-                    }
-                    ShowLicenses(r.data, that.$result_block, that.locales);
-                }
-
+            $.post(url, data, function(html) {
+                console.log(html);
+                that.$result_block.html(html);
             }).always(function () {
                 $loading.remove();
                 that.is_locked = false;

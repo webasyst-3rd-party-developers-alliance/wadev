@@ -1,0 +1,32 @@
+{if !empty($error)}
+    <div class="error block">
+        [`Error`]. {$error}
+    </div>
+{elseif empty($licenses)}
+    <div class="alert block">
+        [`No licenses issued for given domain`]
+    </div>
+{else}
+    <table class="zebra" style="max-width: 1280px">
+        <thead>
+        <tr>
+            <th>[`Product`]</th>
+            <th>[`Date of Issue`]</th>
+            <th>[`Installation Date`]</th>
+            <th>[`Order`]</th>
+            <th>[`Leased`]</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $licenses as $l}
+            <tr>
+                <td>{$l.product|escape}</td>
+                <td>{$l.create_datetime|wa_date:'humandatetime'}</td>
+                <td>{$l.inst_datetime|wa_date:'humandatetime'}</td>
+                <td><a href="#" class="js-order-dialog" data-order-id="{$l.order_id}">{$l.order_id}</a></td>
+                <td style="width: 1%">{if $l.leasing}<i class="icon16 yes"></i>{/if}</td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+{/if}

@@ -34,24 +34,8 @@
     </div>
     <div class="error block"></div>
     <div class="result block">
-
     </div>
 </div>
-<script type="text/html" id="license-rows">
-{literal}
-    {% var licenses=o.licenses; %}
-    {% for(var i=0, n = licenses.length; i< n; i+=1) { %}
-        {% var lic = licenses[i]; %}
-        <tr>
-            <td>{%#lic.product%}</td>
-            <td>{%#lic.create_datetime%}</td>
-            <td>{%#lic.inst_datetime%}</td>
-            <td><a href="#" class="js-order-dialog" data-order-id="{%#lic.order_id%}">{%#lic.order_id%}</a></td>
-            <td>{%#lic.leasing%}</td>
-        </tr>
-    {% } %}
-{/literal}
-</script>
 <script>
     (function ($) {
         new LicensePage({
