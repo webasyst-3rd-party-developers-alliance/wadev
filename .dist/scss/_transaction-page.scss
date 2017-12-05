@@ -2,9 +2,41 @@
 
 .w-transaction-filter {
   box-sizing: border-box;
+  margin: $padding 0;
+
+  .field {
+    display: inline-block;
+    margin-right: 14px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .name {
+      float: none;
+      width: auto;
+      display: inline;
+    }
+
+    .value {
+      display: inline;
+      margin-left: 0;
+    }
+  }
+
+  input[type=submit], input[type=button], button {
+    &.small.button {
+      height: 25px;
+      border-width: 2px;
+      font-size: 1em !important;
+      padding: 0 14px 2px;
+      line-height: 14px;
+    }
+  }
+  
 }
 
-@include large-desktop {
+@include big-desktop {
   .w-transaction-filter {
     float: right;
     width: 300px;
@@ -19,11 +51,19 @@
     }
 
     .field {
+      display: block;
+      margin: 0;
+
       &:first-child {
         padding-top: 0;
       }
-      .name {
 
+      &.buttons {
+        margin-top: $padding;
+      }
+
+      .name {
+        display: block;
         float: none;
         width: 100%;
         padding: 0;
@@ -33,6 +73,7 @@
 
       .value {
         margin: 0;
+        display: block;
 
         input[type=search] {
           width: 100%;
