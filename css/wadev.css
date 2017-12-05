@@ -78,6 +78,22 @@ table.wadev td { padding: 8px 5px; border-bottom: 1px solid #ddd; }
 
 td.min-width, th.min-width { width: 1%; }
 
+.w-transaction-filter { box-sizing: border-box; margin: 14px 0; }
+.w-transaction-filter .field { display: inline-block; margin-right: 14px; }
+.w-transaction-filter .field:last-child { margin-right: 0; }
+.w-transaction-filter .field .name { float: none; width: auto; display: inline; }
+.w-transaction-filter .field .value { display: inline; margin-left: 0; }
+.w-transaction-filter input[type=submit].small.button, .w-transaction-filter input[type=button].small.button, .w-transaction-filter button.small.button { height: 25px; border-width: 2px; font-size: 1em !important; padding: 0 14px 2px; line-height: 14px; }
+
+@media (min-width: 1440px) { .w-transaction-filter { float: right; width: 300px; padding: 7px; background-color: aliceblue; border-radius: 5px; }
+  .w-transaction-filter .wa-form { padding: 7px; border: 1px dashed cadetblue; border-radius: 5px; }
+  .w-transaction-filter .field { display: block; margin: 0; }
+  .w-transaction-filter .field:first-child { padding-top: 0; }
+  .w-transaction-filter .field.buttons { margin-top: 14px; }
+  .w-transaction-filter .field .name { display: block; float: none; width: 100%; padding: 0; margin-top: 0.5em; line-height: 125%; }
+  .w-transaction-filter .field .value { margin: 0; display: block; }
+  .w-transaction-filter .field .value input[type=search] { width: 100%; }
+  .w-transaction-list { margin-right: 314px; } }
 .nobr { white-space: nowrap; }
 
 .money { font-weight: 600; color: #060; white-space: nowrap; }
@@ -86,4 +102,14 @@ td.min-width, th.min-width { width: 1%; }
 .w-table-layout > .w-column { display: table-cell; vertical-align: top; }
 .w-table-layout > .w-column.right { text-align: right; }
 
+.content-header h1 { margin: 0; text-shadow: 1px 1px 0 #fff; }
+
 div.loading128 { width: 128px; height: 128px; margin: 0 auto; padding-bottom: 2em; background: transparent url(../img/loading128.gif) no-repeat fixed center; }
+
+#wa { background: url(../img/gray-noisy-bg.jpg) repeat; }
+
+#content { background-color: white; border: 1px solid #ccc; box-shadow: 0 1px 15px #bbb; margin: 14px; }
+#content > .block { padding: 20px; }
+#content header { background-color: #eee; margin: -20px -20px 14px; padding: 14px 20px; border-bottom: 1px solid #ccc; }
+
+.block.alert { color: #856404; border: 1px solid #ffe8a1; background-color: #fff3cd; border-radius: 4.66667px; padding: 14px; margin: 7px 0; }
