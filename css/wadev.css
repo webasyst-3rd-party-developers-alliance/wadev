@@ -95,4 +95,12 @@ td.min-width, th.min-width { width: 1%; }
 .w-table-layout > .w-column { display: table-cell; vertical-align: top; }
 .w-table-layout > .w-column.right { text-align: right; }
 
+.content-header h1 { margin: 0; text-shadow: 1px 1px 0 #fff; }
+
 div.loading128 { width: 128px; height: 128px; margin: 0 auto; padding-bottom: 2em; background: transparent url(../img/loading128.gif) no-repeat fixed center; }
+
+#wa { background: url(../img/gray-noisy-bg.jpg) repeat; }
+
+#content { background-color: white; border: 1px solid #ccc; box-shadow: 0 1px 15px #bbb; margin: 14px; }
+#content > .block { padding: 20px; }
+#content header { background-color: #eee; margin: -20px -20px 14px; padding: 14px 20px; border-bottom: 1px solid #ccc; }
