@@ -2,6 +2,9 @@
 
 class wadevPromocodeModel extends wadevBasePromocodeModel
 {
+    const TYPE_SINGLE = 'single';
+    const TYPE_MULTI = 'multi';
+
     /**
      * @param int $limit
      *
@@ -19,5 +22,16 @@ class wadevPromocodeModel extends wadevBasePromocodeModel
             $this->hash = md5($this->create_datetime . $this->code . $this->type);
         }
         return true;
+    }
+
+    public function getTypeName()
+    {
+        switch ($this->getAttribute('type')) { // todo: надо что-то делать с переопределением наследства от waModel
+            case self::TYPE_MULTI:
+                return 'M';
+            case self::TYPE_SINGLE:
+                return 'S';
+        }
+        return '';
     }
 }

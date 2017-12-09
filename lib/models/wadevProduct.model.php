@@ -4,6 +4,7 @@ class wadevProductModel extends wadevBaseProductModel
 {
     public function findBySlug($slug)
     {
-        return self::generateModels($this->select('*')->where('slug = s:slug', ['slug' => $slug])->fetch(), false);
+        $product = $this->select('*')->where('slug = s:slug', ['slug' => $slug])->fetchAssoc();
+        return self::generateModels([$product], true);
     }
 }
