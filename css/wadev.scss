@@ -1,0 +1,77 @@
+@import "../.dist/scss/variables";
+@import "../.dist/scss/datepicker";
+@import "../.dist/scss/dialogs";
+@import "../.dist/scss/table";
+@import "../.dist/scss/transaction-page";
+
+.nobr {
+  white-space: nowrap;
+}
+
+.money {
+  font-weight: 600;
+  color:#060;
+  white-space: nowrap;
+}
+
+.w-table-layout {
+  display: table;
+  width: 100%;
+
+  >.w-column {
+    display: table-cell;
+    vertical-align: top;
+
+    &.right {
+      text-align: right;
+    }
+  }
+}
+
+.content-header {
+  h1 {
+    margin: 0;
+    @include text-shadow(1px, 1px, 0, #fff);
+  }
+}
+
+div.loading128 {
+  width: 128px;
+  height: 128px;
+  margin: 0 auto;
+  padding-bottom: 2em;
+  background: transparent url(../img/loading128.gif) no-repeat fixed center;
+}
+
+#wa {
+  background: url(../img/gray-noisy-bg.jpg) repeat;
+}
+
+#content {
+  background-color: white;
+  border: 1px solid #ccc;
+  box-shadow: 0 1px 15px #bbb;
+  margin: $padding;
+
+  > .block {
+    padding: 20px;
+  }
+
+  header {
+    background-color: #eee;
+    margin: -20px -20px 14px;
+    padding: 14px 20px;
+    border-bottom: 1px solid #ccc;
+  }
+}
+
+.block {
+  &.alert {
+    color: #856404;
+    border: 1px solid darken(#ffeeba, 5%);
+    background-color: #fff3cd;
+    border-radius: $padding/3;
+    padding: $padding;
+    margin: $padding/2 0;
+  }
+}

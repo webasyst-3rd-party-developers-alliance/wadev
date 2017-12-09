@@ -1,0 +1,115 @@
+/*datetimepicker*/
+.ui-timepicker-div .ui-widget-header { margin-bottom: 8px; }
+.ui-timepicker-div dl { text-align: left; }
+.ui-timepicker-div dl dt { float: left; clear: left; padding: 0 0 0 5px; }
+.ui-timepicker-div dl dd { margin: 0 10px 10px 40%; }
+.ui-timepicker-div td { font-size: 90%; }
+
+.ui-tpicker-grid-label { background: none; border: none; margin: 0; padding: 0; }
+
+.ui-timepicker-div .ui_tpicker_unit_hide { display: none; }
+
+.ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input { background: none; color: inherit; border: none; outline: none; border-bottom: solid 1px #555; width: 95%; }
+
+.ui-timepicker-div .ui_tpicker_time .ui_tpicker_time_input:focus { border-bottom-color: #aaa; }
+
+.ui-timepicker-rtl { direction: rtl; }
+
+.ui-timepicker-rtl dl { text-align: right; padding: 0 5px 0 0; }
+
+.ui-timepicker-rtl dl dt { float: right; clear: right; }
+
+.ui-timepicker-rtl dl dd { margin: 0 40% 10px 10px; }
+
+/* Shortened version style */
+.ui-timepicker-div.ui-timepicker-oneLine { padding-right: 2px; }
+
+.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_time, .ui-timepicker-div.ui-timepicker-oneLine dt { display: none; }
+
+.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_time_label { display: block; padding-top: 2px; }
+
+.ui-timepicker-div.ui-timepicker-oneLine dl { text-align: right; }
+
+.ui-timepicker-div.ui-timepicker-oneLine dl dd, .ui-timepicker-div.ui-timepicker-oneLine dl dd > div { display: inline-block; margin: 0; }
+
+.ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_minute:before, .ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_second:before { content: ':'; display: inline-block; }
+
+.ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_millisec:before, .ui-timepicker-div.ui-timepicker-oneLine dl dd.ui_tpicker_microsec:before { content: '.'; display: inline-block; }
+
+.ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide, .ui-timepicker-div.ui-timepicker-oneLine .ui_tpicker_unit_hide:before { display: none; }
+
+/*/datetimepicker*/
+.field .value input[type="text"].datepicker { max-width: 100px; min-width: 100px; }
+
+/* ------------------------------------------------------------- Sass CSS3 Mixins! The Cross-Browser CSS3 Sass Library By: Matthieu Aussaguel, http://www.mynameismatthieu.com, @matthieu_tweets
+ List of CSS3 Sass Mixins File to be @imported and @included as you need
+ The purpose of this library is to facilitate the use of CSS3 on different browsers avoiding HARD TO READ and NEVER ENDING css files
+ note: All CSS3 Properties are being supported by Safari 5 more info: http://www.findmebyip.com/litmus/#css3-properties
+
+------------------------------------------------------------- */
+.w-dialog-wrapper { position: absolute; top: 0; left: 0; box-sizing: border-box; background: #fff; border: 1px solid #888; border-radius: 2px; box-shadow: 0 1px 5px rgba(0, 0, 0, 0.13); }
+.w-dialog-wrapper.is-full-screen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: transparent; border: 0; border-radius: 0; box-shadow: none; }
+.w-dialog-wrapper.is-full-screen .w-dialog-background { top: 0; left: 0; width: 100%; height: 100%; position: absolute; box-sizing: border-box; background: rgba(255, 255, 255, 0.8); }
+.w-dialog-wrapper.is-full-screen .w-dialog-block { position: absolute; box-sizing: border-box; background: #fff; border: 5px solid #f3f3f3; border-radius: 4px; box-shadow: 0 0 70px #bbb; }
+.w-dialog-wrapper.is-full-screen .w-dialog-block.is-animated { transition: all 200ms linear; }
+.w-dialog-wrapper.is-full-screen .w-dialog-block form { overflow: visible; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-header { padding: 14px 28px 14px 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content { padding: 0 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content .is-long-content { overflow: auto; box-sizing: border-box; }
+.w-dialog-wrapper .w-dialog-block.gray-header .w-dialog-header { background-color: #f3f3f3; }
+.w-dialog-wrapper .w-dialog-block.gray-header h1 { text-shadow: 1px 1px 0 white; }
+.w-dialog-wrapper .w-dialog-block.gray-header h1 .hint { font-weight: 400; text-transform: lowercase; }
+.w-dialog-wrapper .w-dialog-block.compact-header .w-dialog-header { padding: 7px 28px 7px 28px; }
+.w-dialog-wrapper .w-dialog-block .w-dialog-content { padding-top: 14px; border-bottom: 1px solid #f3f3f3; }
+.w-dialog-wrapper .w-dialog-footer { margin: 2em 0 0; padding: 0 28px 28px 28px; }
+.w-dialog-wrapper .w-dialog-footer .icon16 { vertical-align: baseline; position: relative; top: 3px; margin: 0 0 0 4px; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-table-layout .w-column { vertical-align: middle; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button { display: inline-block; vertical-align: middle; margin: 0 0 0 1em; cursor: pointer; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button:first-child { margin-left: 0; }
+.w-dialog-wrapper .w-dialog-footer .w-actions .w-button .icon16 { position: relative; top: 3px; vertical-align: baseline; }
+
+.w-view-order-dialog .w-dialog-block { min-width: 450px; min-height: 200px; max-width: 950px; }
+.w-view-order-dialog .w-dialog-block .w-dialog-content { overflow: auto; }
+.w-view-order-dialog .w-dialog-block .w-dialog-content div.error { margin: 1em 0; border: 1px solid firebrick; color: firebrick; font-weight: 600; font-size: 16px; text-shadow: 1px 1px 0 white; background-color: #f8dbdb; padding: 1em; }
+
+table.wadev { border: 1px solid #ddd; border-spacing: 0; border-collapse: collapse; width: 100%; }
+table.wadev th { padding: 5px; background-color: #ddd; }
+table.wadev td { padding: 8px 5px; border-bottom: 1px solid #ddd; }
+
+td.min-width, th.min-width { width: 1%; }
+
+.w-transaction-filter { box-sizing: border-box; margin: 14px 0; }
+.w-transaction-filter .field { display: inline-block; margin-right: 14px; }
+.w-transaction-filter .field:last-child { margin-right: 0; }
+.w-transaction-filter .field .name { float: none; width: auto; display: inline; }
+.w-transaction-filter .field .value { display: inline; margin-left: 0; }
+.w-transaction-filter input[type=submit].small.button, .w-transaction-filter input[type=button].small.button, .w-transaction-filter button.small.button { height: 25px; border-width: 2px; font-size: 1em !important; padding: 0 14px 2px; line-height: 14px; }
+
+@media (min-width: 1440px) { .w-transaction-filter { float: right; width: 300px; padding: 7px; background-color: aliceblue; border-radius: 5px; }
+  .w-transaction-filter .wa-form { padding: 7px; border: 1px dashed cadetblue; border-radius: 5px; }
+  .w-transaction-filter .field { display: block; margin: 0; }
+  .w-transaction-filter .field:first-child { padding-top: 0; }
+  .w-transaction-filter .field.buttons { margin-top: 14px; }
+  .w-transaction-filter .field .name { display: block; float: none; width: 100%; padding: 0; margin-top: 0.5em; line-height: 125%; }
+  .w-transaction-filter .field .value { margin: 0; display: block; }
+  .w-transaction-filter .field .value input[type=search] { width: 100%; }
+  .w-transaction-list { margin-right: 314px; } }
+.nobr { white-space: nowrap; }
+
+.money { font-weight: 600; color: #060; white-space: nowrap; }
+
+.w-table-layout { display: table; width: 100%; }
+.w-table-layout > .w-column { display: table-cell; vertical-align: top; }
+.w-table-layout > .w-column.right { text-align: right; }
+
+.content-header h1 { margin: 0; text-shadow: 1px 1px 0 #fff; }
+
+div.loading128 { width: 128px; height: 128px; margin: 0 auto; padding-bottom: 2em; background: transparent url(../img/loading128.gif) no-repeat fixed center; }
+
+#wa { background: url(../img/gray-noisy-bg.jpg) repeat; }
+
+#content { background-color: white; border: 1px solid #ccc; box-shadow: 0 1px 15px #bbb; margin: 14px; }
+#content > .block { padding: 20px; }
+#content header { background-color: #eee; margin: -20px -20px 14px; padding: 14px 20px; border-bottom: 1px solid #ccc; }
+
+.block.alert { color: #856404; border: 1px solid #ffe8a1; background-color: #fff3cd; border-radius: 4.66667px; padding: 14px; margin: 7px 0; }

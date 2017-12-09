@@ -1,0 +1,24 @@
+
+$padding: 14px;
+
+$desktop-min-width: 992px;
+$large-desktop-min-width: 1200px;
+$big-destop-min-width: 1440px;
+
+@mixin desktop {
+  @media (screen and min-width: #{$desktop-min-width}) {
+    @content;
+  }
+}
+
+@mixin large-desktop {
+  @media (screen and min-width: #{$large-desktop-min-width}) {
+    @content;
+  }
+}
+
+@mixin big-desktop {
+  @media (screen and min-width: #{$big-destop-min-width}) {
+    @content;
+  }
+}
