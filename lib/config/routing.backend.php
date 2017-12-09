@@ -6,5 +6,6 @@ return [
     'settings/'                   => 'settings/',
     'license/'                    => 'license/',
     'products/'                   => 'products/',
-    ''                            => 'transaction/'
+    'promocode/'                  => 'promocode/',
+    ''                            => 'transaction/',
 ];
