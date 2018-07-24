@@ -47,11 +47,22 @@ class wadevNet extends waNet
         return $this->query($url, [], waNet::METHOD_DELETE);
     }
 
+    /**
+     * @param $url
+     * @return array|SimpleXMLElement|string|waNet
+     * @throws waException
+     */
     public function get($url)
     {
         return $this->query($url, [], waNet::METHOD_GET);
     }
 
+    /**
+     * @param $url
+     * @param array $data
+     * @return array|SimpleXMLElement|string|waNet
+     * @throws waException
+     */
     public function post($url, $data = [])
     {
         return $this->query($url, $data, waNet::METHOD_POST);
