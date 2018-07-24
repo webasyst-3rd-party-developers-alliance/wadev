@@ -47,17 +47,28 @@ class wadevNet extends waNet
         return $this->query($url, [], waNet::METHOD_DELETE);
     }
 
+    /**
+     * @param $url
+     * @return array|SimpleXMLElement|string|waNet
+     * @throws waException
+     */
     public function get($url)
     {
         return $this->query($url, [], waNet::METHOD_GET);
     }
 
+    /**
+     * @param $url
+     * @param array $data
+     * @return array|SimpleXMLElement|string|waNet
+     * @throws waException
+     */
     public function post($url, $data = [])
     {
         return $this->query($url, $data, waNet::METHOD_POST);
     }
 
-    public function query($url, $content = array(), $method = self::METHOD_GET)
+    public function query($url, $content = array(), $method = self::METHOD_GET, $callback = null)
     {
         $expected_http_code = $this->options['expected_http_code'];
         $this->options['expected_http_code'] = null;

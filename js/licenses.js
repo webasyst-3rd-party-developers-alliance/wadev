@@ -31,30 +31,18 @@ var LicensePage = (function ($) {
     LicensePage.prototype.bindEvents = function () {
         var that = this;
 
+        that.$result_block.on('click', '.js-order-dialog', function(e){
+            e.preventDefault();
+            const order_id = $(this).data('order-id');
+            if(order_id) new OrderDialog({order_id:order_id});
+            return false;
+        });
+
         that.$form.on("submit", function (event) {
             event.preventDefault();
             that.submit(that.$form);
         });
     };
-
-    function l10n(str, locales) {
-        return (locales[str] || str);
-    }
-
-    function ShowLicenses(data, $result, locales) {
-        $result.empty();
-
-        var $table = $('<table class="zebra"><thead><tr></tr></thead><tbody></tbody></table>');
-        $('thead  tr', $table).append('<th>' + l10n('Product', locales) + '</th>')
-            .append('<th>' + l10n('Issued', locales) + '</th>')
-            .append('<th>' + l10n('Installed', locales) + '</th>')
-            .append('<th>' + l10n('Order', locales) + '</th>')
-            .append('<th class="min-width">' + l10n('Leased', locales) + '</th>');
-
-        $('tbody', $table).append(tmpl('license-rows', {licenses: data}));
-
-        $result.append($table);
-    }
 
     LicensePage.prototype.submit = function ($form) {
         var that = this,
@@ -66,14 +54,9 @@ var LicensePage = (function ($) {
 
         if (!that.is_locked) {
             that.is_locked = true;
-            $.post(url, data, function (r) {
-
-                if (r.status === 'ok') {
-                    if (r.data && $.isArray(r.data) && r.data.length) {
-                        ShowLicenses(r.data, that.$result_block, that.locales);
-                    }
-                }
-
+            $.post(url, data, function(html) {
+                console.log(html);
+                that.$result_block.html(html);
             }).always(function () {
                 $loading.remove();
                 that.is_locked = false;

@@ -3,11 +3,11 @@ return array(
     'wadev_product' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
         'name' => array('varchar', 256, 'null' => 0),
-        'price' => array('float', 'null' => 0, 'default' => '0'),
+        'price' => array('decimal', "15,2", 'default' => '0.00'),
         'repeated_license' => array('int', 1, 'null' => 0, 'default' => '0'),
         'partner' => array('int', 1, 'null' => 0, 'default' => '0'),
         'current_version' => array('varchar', 16, 'null' => 0),
-        'slug' => array('varchar', 32, 'null' => 0),
+        'slug' => array('varchar', 255, 'null' => 0, 'default' => ''),
         ':keys' => array(
             'PRIMARY' => 'id',
         ),
@@ -38,9 +38,9 @@ return array(
     'wadev_transaction' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
         'datetime' => array('datetime', 'null' => 0),
-        'balance_before' => array('float', 'null' => 0, 'default' => '0'),
-        'amount' => array('float', 'null' => 0, 'default' => '0'),
-        'balance_after' => array('float', 'null' => 0, 'default' => '0'),
+        'balance_before' => array('decimal', "15,2", 'default' => '0.00'),
+        'amount' => array('decimal', "15,2", 'default' => '0.00'),
+        'balance_after' => array('decimal', "15,2", 'default' => '0.00'),
         'order_id' => array('int', 16, 'null' => 0),
         'comment' => array('varchar', 256, 'null' => 0),
         ':keys' => array(

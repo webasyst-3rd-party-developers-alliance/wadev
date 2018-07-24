@@ -4,8 +4,9 @@
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
     <title>{$wa->appName()} &mdash; {$wa->accountName()}</title>
     {$wa->css()}
-    <link type="text/css" rel="stylesheet" href="{$wa_app_static_url}css/wadev.css?v{$wa->version()}">
     <link rel="stylesheet" href="{$wa_url}wa-content/js/jquery-plugins/ibutton/jquery.ibutton.min.css?v={$wa->version()}">
+    <link type="text/css" rel="stylesheet" href="{$wa_app_static_url}css/vendors/daterangepicker.min.css?v{$wa->version()}">
+    <link type="text/css" rel="stylesheet" href="{$wa_app_static_url}css/wadev.css?v{$wa->version()}">
     <script type="text/javascript" src="{$wa_url}wa-content/js/jquery/jquery-1.11.1.min.js?{$wa->version(true)}"></script>
 
     {wa_js file="js/compiled/wadev-external.min.js"}
@@ -25,13 +26,22 @@
         {$wa_url}wa-content/js/jquery-wa/wa.dialog.js
         {$wa_url}wa-content/js/farbtastic/farbtastic.js
         {$wa_app_static_url}js/vendors/tmpl.js
+        {$wa_app_static_url}js/vendors/moment.js
+    {$wa_app_static_url}js/vendors/jquery.daterangepicker.min.js
     {/wa_js}
+
+    {if $wa->locale()!='en'}
+    <script type="text/javascript" src="{$wa_url}wa-content/js/jquery-ui/i18n/jquery.ui.datepicker-{$wa->locale()}.js"></script>
+    {/if}
+
 
     {wa_js file="js/compiled/wadev.min.js"}
         {$wa_app_static_url}js/wadev.js
         {$wa_app_static_url}js/settings.js
         {$wa_app_static_url}js/licenses.js
+        {$wa_app_static_url}js/orders.js
         {$wa_app_static_url}js/products.js
+        {$wa_app_static_url}js/promocodes.js
     {/wa_js}
 
 </head>
@@ -54,6 +64,9 @@
                         <a href="{$wa_app_url}products/"><i class="icon16 apps"></i>[`Products`]</a>
                     </li>
                     <li>
+                        <a href="{$wa_app_url}promocode/"><i class="icon16"></i>[`Promocodes`]</a>
+                    </li>
+                    <li>
                         <a href="{$wa_app_url}settings/"><i class="icon16 settings"></i>[`Settings`]</a>
                     </li>
                 </ul>
@@ -61,9 +74,7 @@
         </div>
         <div class="content left200px">
             <div id="content">
-                <div class="block">
-                    {block name='content'}{$content}{/block}
-                </div>
+                {block name='content'}{$content}{/block}
             </div>
         </div>
     </div>

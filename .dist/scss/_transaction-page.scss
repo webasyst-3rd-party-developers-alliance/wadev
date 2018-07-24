@@ -1,0 +1,89 @@
+@import "variables";
+
+.w-transaction-filter {
+  box-sizing: border-box;
+  margin: $padding 0;
+
+  .field {
+    display: inline-block;
+    margin-right: 14px;
+
+    &:last-child {
+      margin-right: 0;
+    }
+
+    .name {
+      float: none;
+      width: auto;
+      display: inline;
+    }
+
+    .value {
+      display: inline;
+      margin-left: 0;
+    }
+  }
+
+  input[type=submit], input[type=button], button {
+    &.small.button {
+      height: 25px;
+      border-width: 2px;
+      font-size: 1em !important;
+      padding: 0 14px 2px;
+      line-height: 14px;
+    }
+  }
+  
+}
+
+@include big-desktop {
+  .w-transaction-filter {
+    float: right;
+    width: 300px;
+    padding: $padding/2;
+    background-color: aliceblue;
+    border-radius: 5px;
+
+    .wa-form {
+      padding: $padding/2;
+      border: 1px dashed cadetblue;
+      border-radius: 5px;
+    }
+
+    .field {
+      display: block;
+      margin: 0;
+
+      &:first-child {
+        padding-top: 0;
+      }
+
+      &.buttons {
+        margin-top: $padding;
+      }
+
+      .name {
+        display: block;
+        float: none;
+        width: 100%;
+        padding: 0;
+        margin-top: 0.5em;
+        line-height: 125%;
+      }
+
+      .value {
+        margin: 0;
+        display: block;
+
+        input[type=search] {
+          width: 100%;
+        }
+      }
+    }
+
+  }
+
+  .w-transaction-list {
+    margin-right: 300px+$padding;
+  }
+}

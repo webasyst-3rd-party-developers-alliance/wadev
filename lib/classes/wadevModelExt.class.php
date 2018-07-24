@@ -1,29 +1,33 @@
 <?php
 
 /**
- * Class wadevModelExt
+ * Class waModelExt
  *
  * @property integer|array $pk
  */
 class wadevModelExt extends waModel
 {
     /**
-     * @var array for holding values
+     * @var waArrayObjectDiff for holding values
      */
-    protected $_attributes;
+    protected $attributes;
     protected $_dirty;
     protected $_pk;
+    protected $_required_attributes = [];
+    protected $_errors;
 
     public $isNewRecord;
 
     /**
      * waModelExt constructor.
+     *
      * @param array $attributes
-     * @param null $type
-     * @param bool $writable
+     * @param null  $type
+     * @param bool  $writable
+     *
      * @throws waDbException
      */
-    public function __construct($attributes = array(), $type = null, $writable = false)
+    public function __construct($attributes = [], $type = null, $writable = false)
     {
         parent::__construct($type, $writable);
         $this->_pk = $this->id;
@@ -33,13 +37,15 @@ class wadevModelExt extends waModel
 //        }
 
         $this->isNewRecord = true;
-        $this->_dirty = array();
+        $this->_dirty = [];
+
+        $this->attributes = new waArrayObjectDiff();
 
         $this->fillAttributes();
-        if ($attributes && is_array($attributes)) {
-            $attributes = array_merge($this->getDefaultAttributes(), $attributes);
-            $this->setAttributes($attributes);
+        if (!is_array($attributes)) {
+            $attributes = [];
         }
+        $this->setAttributes(array_merge($this->getDefaultAttributes(), $attributes));
     }
 
     /**
@@ -47,7 +53,18 @@ class wadevModelExt extends waModel
      */
     protected function getDefaultAttributes()
     {
-        return array();
+        $default = [];
+        foreach ($this->getMetadata() as $name => $field) {
+            if (array_key_exists('default', $field)) {
+                $default[$name] = $field['default'];
+            } elseif (!empty($field['null'])) {
+                $default[$name] = null;
+            } else {
+                $default[$name] = '';
+            }
+        }
+
+        return $default;
     }
 
     /**
@@ -62,8 +79,10 @@ class wadevModelExt extends waModel
             foreach ($this->id as $id) {
                 $pk[$id] = $this->getAttribute($id);
             }
+
             return $pk;
         }
+
         return $this->getAttribute($this->_pk);
     }
 
@@ -74,6 +93,7 @@ class wadevModelExt extends waModel
 
     /**
      * @param $value
+     *
      * @throws waDbException
      */
     protected function setPk($value)
@@ -88,6 +108,8 @@ class wadevModelExt extends waModel
             foreach ($this->id as $id) {
                 $this->setAttribute($id, $value[$id]);
             }
+        } elseif ($value === true) {
+            $this->setAttribute($this->_pk, $this->getLastInsertedComplexId());
         } else {
             $this->setAttribute($this->_pk, $value);
         }
@@ -99,21 +121,24 @@ class wadevModelExt extends waModel
      */
     protected function fillAttributes()
     {
-        $this->_attributes = array();
+        $this->attributes->clearPersistent();
         if ($this->fields) {
-            $this->_attributes = array_fill_keys(array_keys($this->fields), null);
+            $this->attributes->setAll(array_fill_keys(array_keys($this->fields), ''));
         }
-        return $this->_attributes;
+
+        return $this->attributes;
     }
 
     /**
      * Checks if model has such attribute
+     *
      * @param $name
+     *
      * @return bool
      */
     public function hasAttribute($name)
     {
-        return array_key_exists($name, $this->_attributes);
+        return $this->attributes->offsetExists($name);
     }
 
     protected function castPopulated($field, $value)
@@ -131,38 +156,51 @@ class wadevModelExt extends waModel
             case 'tinyint':
             case 'int':
             case 'integer':
-                return (int) $value;
+                return (int)$value;
             case 'decimal':
             case 'double':
             case 'float':
-                return (double) $value;
+                return (double)$value;
             default:
                 return $value;
         }
     }
 
-    public function setAttributes($attributes = array())
+    /**
+     * @param array $attributes
+     *
+     * @throws waDbException
+     */
+    public function setAttributes($attributes = [])
     {
-        if ($this->_attributes === null) {
+        if (!$this->attributes->count()) {
             $this->fillAttributes();
         }
+
         foreach ($attributes as $attribute_key => $attribute_value) {
             try {
 //                if (isset($this->$attribute_key)) {
 //                    $this->setAttribute($attribute_key, $attribute_value);
 //                } else {
-                if (array_key_exists($attribute_key, $this->_attributes)) {
-                    $this->_attributes[$attribute_key] = $this->castPopulated($attribute_key, $attribute_value);
+                if ($this->hasAttribute($attribute_key)) {
+                    $this->attributes[$attribute_key] = $this->castPopulated($attribute_key, $attribute_value);
                 }
             } catch (Exception $ex) {
+                throw new waDbException($ex->getMessage());
             }
         }
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     * @throws waDbException
+     */
     public function getAttribute($name)
     {
         if ($this->hasAttribute($name)) {
-            return $this->_attributes[$name];
+            return $this->attributes[$name];
         }
         throw new waDbException('No attribute ' . $name);
     }
@@ -175,20 +213,25 @@ class wadevModelExt extends waModel
     public function __unset($name)
     {
         if ($this->hasAttribute($name)) {
-            unset($this->_attributes[$name]);
+            unset($this->attributes[$name]);
         }
     }
 
+    /**
+     * @return array
+     * @throws waDbException
+     */
     public function getAttributes()
     {
-        $attrs = array();
-        foreach ($this->_attributes as $name => $attr) {
+        $attrs = [];
+        foreach ($this->attributes as $name => $attr) {
             if (isset($this->$name)) { /* just in case if there is 'id' field or smth like this */
                 $attrs[$name] = $this->getAttribute($name);
             } else {
                 $attrs[$name] = $this->$name;
             }
         }
+
         return $attrs;
     }
 
@@ -213,20 +256,27 @@ class wadevModelExt extends waModel
         if (method_exists($this, $method)) {
             $this->$method($value);
         } elseif ($this->hasAttribute($name)) {
-            $this->_attributes[$name] = $value;
-        } else {
-            $this->_dirty[$name] = $value; //todo: hm.. sure?
+            $this->attributes[$name] = $value;
         }
+//        else {
+//            $this->_dirty[$name] = $value; //todo: hm.. sure?
+//        }
     }
 
+    /**
+     * @param $name
+     *
+     * @return mixed
+     * @throws waDbException
+     */
     public function __get($name)
     {
         $method = $this->getMethodName($name);
         if (method_exists($this, $method)) {
             return $this->$method();
         }
-        if (array_key_exists($name, $this->_attributes)) {
-            return $this->_attributes[$name]; //todo: cast to $this->fields[$name]['type']
+        if ($this->hasAttribute($name)) {
+            return $this->attributes[$name]; //todo: cast to $this->fields[$name]['type']
         }
         if (array_key_exists($name, $this->_dirty)) {
             return $this->_dirty[$name];
@@ -259,8 +309,10 @@ class wadevModelExt extends waModel
 
     /**
      * Return model/models
+     *
      * @param $query waDbQuery|waDbResultSelect
      * @param $one bool will return only first model
+     *
      * @return static|static[]|null
      */
     public function findByQuery($query, $one = true)
@@ -270,13 +322,15 @@ class wadevModelExt extends waModel
             return null;
         }
 
-       return self::generateModels($vals, $one);
+        return self::generateModels($vals, $one);
     }
 
     /**
      * Return model/models
+     *
      * @param $query waDbQuery|waDbResultSelect
      * @param $one bool will return only first model
+     *
      * @return static|static[]|null
      */
     public function findByFields($field, $value = null, $all = false, $limit = false)
@@ -286,19 +340,21 @@ class wadevModelExt extends waModel
         if (is_array($field)) {
             $all = $value;
         }
-        if (!$all){
-            $vals = array($vals);
+        if (!$all) {
+            $vals = [$vals];
         }
         if (!$vals) {
             return null;
         }
 
-       return self::generateModels($vals, !$all);
+        return self::generateModels($vals, !$all);
     }
 
     /**
      * Return model/models
+     *
      * @param $pk int|array
+     *
      * @return static|static[]|null
      */
     public function findByPk($pk)
@@ -314,7 +370,7 @@ class wadevModelExt extends waModel
         }
 
         if ($one) {
-            $vals = array($vals);
+            $vals = [$vals];
         }
 
         return self::generateModels($vals, $one);
@@ -326,17 +382,20 @@ class wadevModelExt extends waModel
     public function findAll()
     {
         $query = new waDbQuery($this);
+
         return $this->findByQuery($query->select('*'), false);
     }
 
     /**
      * Returns models with db data
+     *
      * @param $vals array
+     *
      * @return static[]|null
      */
     public static function populate($vals)
     {
-        $return = array();
+        $return = [];
 
         if (!$vals) {
             return null;
@@ -357,6 +416,11 @@ class wadevModelExt extends waModel
         return $return ? $return : null;
     }
 
+    /**
+     * @param $json
+     *
+     * @throws waDbException
+     */
     public function loadFromJson($json)
     {
         $data = json_decode($json, 1);
@@ -375,27 +439,40 @@ class wadevModelExt extends waModel
 
     /**
      * @param array $attributes
-     * @param int $type Execution mode for SQL query INSERT:
+     * @param int   $type Execution mode for SQL query INSERT:
      *     0: query is executed without additional conditions (default mode)
      *     1: query is executed with condition ON DUPLICATE KEY UPDATE
      *     2: query is executed with key word IGNORE
+     *
      * @return bool|int|null|resource|waDbResultUpdate
+     * @throws waDbException
      */
-    public function save($attributes = array(), $type = 0)
+    public function save($validate = true, $attributes = [], $type = 0)
     {
+        if (is_array($validate)) {
+            $type = $attributes;
+            $attributes = $validate;
+            $validate = true;
+        }
+
         if (!$this->beforeSave()) {
+            return false;
+        }
+
+        $save_attributes = $this->getAttributes();
+
+        if ($validate && !$this->validate($attributes)) {
             return false;
         }
 
         $new = $this->isNewRecord;
         if ($new) {
-            $result = $this->insert($this->getAttributes(), $type);
+            $result = $this->insert($save_attributes, $type);
             if ($result) {
                 $this->setPk($result);
                 $this->isNewRecord = false;
             }
         } else {
-            $save_attributes = $this->getAttributes();
             if ($attributes) {
                 foreach ($save_attributes as $attribute => $value) {
                     if (!in_array($attribute, $attributes)) {
@@ -413,8 +490,35 @@ class wadevModelExt extends waModel
         return $result;
     }
 
+    /**
+     * @return bool
+     * @throws waDbException
+     */
     public function delete()
     {
         return $this->deleteById($this->getPk());
+    }
+
+    public function getRequiredAttributes()
+    {
+        return $this->_required_attributes;
+    }
+
+    /**
+     * @param $attributes
+     *
+     * @return bool
+     * @throws waDbException
+     */
+    public function validate($attributes = [])
+    {
+        $save_attributes = $this->getAttributes();
+        foreach ($this->_required_attributes as $required_attribute) {
+            if (empty($save_attributes[$required_attribute])
+                || ($attributes && !array_key_exists($required_attribute, $attributes))) {
+                throw new waDbException('no required attribute ' . $required_attribute);
+            }
+        }
+        return true;
     }
 }

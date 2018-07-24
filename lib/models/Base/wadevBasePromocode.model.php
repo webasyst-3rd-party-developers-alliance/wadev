@@ -11,6 +11,7 @@
  * @property $percent float
  * @property $description string
  * @property $usage integer
+ * @property $hash string
  */
 class wadevBasePromocodeModel extends wadevModelExt
 {

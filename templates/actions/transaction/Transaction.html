@@ -1,67 +1,119 @@
 <div class="block padded">
+    <header>
+        <div class="content-header">
+            <h1>[`Transactions`]</h1>
+            {if $last_update}<span class="hint">[`last sync:`] {$last_update|wa_datetime:'humandatetime'}</span>{/if}
+        </div>
+    </header>
+
     <p class="wadev-balance">[`Current account balance`]: <b>{$balance.balance|wa_currency_html:$balance.currency}</b>. {if !empty($balance['error'])}<br><span class="error">{$balance.error}</span>{/if}</p>
-    <div class="content-header">
-        <h1>[`Transactions`]</h1>
-    </div>
 
     <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
-
-    <form method="get" class="wa-form">
-        <div class="field">
-            <div class="name">[`Search`]</div>
-            <div class="value">
-                <input type="search" name="search" value="{$search|default:''|escape}">
-            </div>
+    <div class="row-wrapper">
+        <div class="w-transaction-filter">
+            <form method="get" class="wa-form">
+                <div class="field">
+                    <div class="name">[`Search`]</div>
+                    <div class="value">
+                        <input type="search" name="search" value="{$search|default:''|escape}">
+                    </div>
+                </div>
+                <div class="field">
+                    <div class="name">[`Dates`]</div>
+                    <div class="value" id="date-range">
+                        <input type="text" class="datepicker" name="from" value="{$from|default:''|escape}">
+                        <input type="text" class="datepicker" name="to" value="{$to|default:''|escape}">
+                    </div>
+                </div>
+                <div class="field buttons">
+                    <div class="value">
+                        <button class="small blue button" type="submit">[`Filter`]</button>
+                    </div>
+                </div>
+            </form>
         </div>
-    </form>
 
-
-    <table class="zebra" data-transactions>
-        <thead>
-        <tr>
-            <th>Дата</th>
-            <th>До</th>
-            <th>Сумма</th>
-            <th>После</th>
-            <th>Номер заказа</th>
-            <th>Комментарий</th>
-        </tr>
-        </thead>
-        <tbody>
-        {foreach $transactions as $transaction}
-        <tr{if $transaction->amount < 0} class="red italic"{/if}>
-            <td>{$transaction->datetime|wa_datetime:'humandatetime'}</td>
-            <td class="align-right numerical">{$transaction->balance_before|wa_format_number:2}</td>
-            <td class="align-right numerical bold">{$transaction->amount|wa_format_number:2}</td>
-            <td class="align-right numerical">{$transaction->balance_after|wa_format_number:2}</td>
-            <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
-            <td>{$transaction->comment|escape}</td>
-        </tr>
-        {/foreach}
-        </tbody>
-    </table>
-    {include '../include.pagination.html'
-        baseurl='transaction/'
-        limit=$limit
-        search=$search
-        current_page=$current_page
-        pagination=$pagination
-        start=$start
-    inline}
+        <div class="w-transaction-list">
+            <table class="zebra" data-transactions>
+                <thead>
+                <tr>
+                    <th>Дата</th>
+                    <th>До</th>
+                    <th>Сумма</th>
+                    <th>После</th>
+                    <th>Номер заказа</th>
+                    <th>Комментарий</th>
+                </tr>
+                </thead>
+                <tbody>
+                {foreach $transactions as $transaction}
+                <tr{if $transaction->amount < 0} class="red italic"{/if}>
+                    <td class="nobr">{$transaction->datetime|wa_datetime:'humandatetime'}</td>
+                    <td class="align-right numerical nobr">{$transaction->balance_before|wa_format_number:2}</td>
+                    <td class="align-right numerical bold nobr">{$transaction->amount|wa_format_number:2}</td>
+                    <td class="align-right numerical nobr">{$transaction->balance_after|wa_format_number:2}</td>
+                    <td>{if $transaction->order_id}<a href="#" data-order-id="{$transaction->order_id}">{$transaction->order_id}</a>{/if}</td>
+                    <td>{$transaction->comment|escape}</td>
+                </tr>
+                {/foreach}
+                {if $total}
+                <tr>
+                    <td colspan="2">Всего на странице:</td>
+                    <td class="align-right numerical bold">
+                        {if $total.plus}<div class="nobr">{$total.plus|wa_format_number:2}</div>{/if}
+                        {if $total.minus}<div class="nobr red italic">{$total.minus|wa_format_number:2}</div>{/if}
+                    </td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {/if}
+                </tbody>
+            </table>
+            {include '../include.pagination.html'
+                baseurl='transaction/'
+                limit=$limit
+                search=$search
+                current_page=$current_page
+                pagination=$pagination
+                start=$start
+            inline}
+        </div>
+    </div>
 </div>
 
 <script>
     (function(){
+        // todo: уже нужен класс
+        // сделаем на днях :-)
         var $transaction_wrapper = $('[data-transactions]');
 
         $transaction_wrapper.on('click', '[data-order-id]', function (e) {
             e.preventDefault();
-            var $this = $(this);
+            var order_id = $(this).data('order-id');
+            if(order_id) new OrderDialog({ order_id: order_id });
+            return false;
+        });
+        $('#date-range').dateRangePicker({
+            separator: '[` to `]',
+            endDate: '{date('Y-m-d')}',
+            startOfWeek: 'monday',
+            autoClose: true,
+            monthSelect:true,
+            yearSelect: true,
+            getValue: function () {
+                $('[name=from]', '#date-range').val() && $('[name=to]', '#date-range').val() ? $('[name=from]', '#date-range').val() + '[` to `]' + $('[name=to]', '#date-range').val() : '';
+            },
+            setValue: function (s, s1, s2) {
+                $('[name=from]', '#date-range').val(s1);
+                $('[name=to]', '#date-range').val(s2);
+            }
+        });
 
-            $('<div>').waDialog({
-                url: '?module=transaction&action=info&order_id=' + $this.data('order-id'),
-                'buttons': '<a href="#" class="cancel hint">Close</a>'
-            });
-        })
+        // hide current datepicker by hardcoding style, because jquery.ui.datepicker
+        // has bag and doesn't hide calendar by oneself
+        $('#ui-datepicker-div').hide();
+        //Remove indicator from wadev app on toolbar
+        $('#wa-app-wadev span.indicator').remove();
     })()
 </script>

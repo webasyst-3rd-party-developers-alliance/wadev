@@ -1,0 +1,70 @@
+<div class="block padded" id="wadev-promocode-page">
+    <header>
+        <div class="content-header">
+            <h1>[`Promocodes`]</h1>
+            {if $last_update}<span class="hint">[`last sync:`] {$last_update|wa_datetime:'humandatetime'}</span>{/if}
+        </div>
+    </header>
+
+    <!--<a href="#" class="button green" data-wadev-action="update-transactions">[`Update`]</a>-->
+
+    <!--<form method="get" class="wa-form">-->
+        <!--<div class="field">-->
+            <!--<div class="name">[`Search`]</div>-->
+            <!--<div class="value">-->
+                <!--<input type="search" name="search" value="{$search|default:''|escape}">-->
+            <!--</div>-->
+        <!--</div>-->
+    <!--</form>-->
+
+
+    <table class="zebra" data-promocodes>
+        <thead>
+        <tr>
+            <th>Дата</th>
+            <th>Тип</th>
+            <th>Код</th>
+            <th>От</th>
+            <th>До</th>
+            <th>Скидка</th>
+            <th>Использовано</th>
+            <th>Описание</th>
+            <th>Продукты</th>
+        </tr>
+        </thead>
+        <tbody>
+        {foreach $promocodes as $promo}
+            <tr data-promo-id="{$promo->model->pk}">
+                <td>{$promo->model->create_datetime|wa_datetime:'humandatetime'}</td>
+                <td>{$promo->model->getTypeName()}</td>
+                <td>{$promo->model->code}</td>
+                <td>{$promo->model->start_date|wa_datetime:'humandatetime'}</td>
+                <td>{$promo->model->end_date|wa_datetime:'humandatetime'}</td>
+                <td>{$promo->model->percent}</td>
+                <td>{$promo->model->usage}</td>
+                <td class="small">{$promo->model->description|escape}</td>
+                <td class="small">{foreach $promo->products as $product}{$product->model->name|escape}<br>{/foreach}</td>
+            </tr>
+        {/foreach}
+        </tbody>
+    </table>
+    {*include '../include.pagination.html'
+        baseurl='transaction/'
+        limit=$limit
+        search=$search
+        current_page=$current_page
+        pagination=$pagination
+        start=$start
+    inline*}
+</div>
+
+<script>
+    (function ($) {
+        new PromocodePage({
+            $wrapper: $("#wadev-promocode-page"),
+            locales: {
+                checking: "[`Checking`]"
+            }
+        });
+    })(jQuery);
+</script>

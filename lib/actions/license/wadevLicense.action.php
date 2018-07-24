@@ -8,6 +8,8 @@ class wadevLicenseAction extends wadevViewAction
 {
     public function execute()
     {
+        $products = wadevProductModel::model()->findAll();
 
+        $this->view->assign(compact('products'));
     }
 }
