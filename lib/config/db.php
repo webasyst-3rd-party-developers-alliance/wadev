@@ -3,18 +3,18 @@ return array(
     'wadev_product' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
         'name' => array('varchar', 256, 'null' => 0),
-        'price' => array('float', 'null' => 0, 'default' => '0'),
+        'price' => array('decimal', "15,2", 'default' => '0.00'),
         'repeated_license' => array('int', 1, 'null' => 0, 'default' => '0'),
         'partner' => array('int', 1, 'null' => 0, 'default' => '0'),
         'current_version' => array('varchar', 16, 'null' => 0),
-        'slug' => array('varchar', 32, 'null' => 0),
+        'slug' => array('varchar', 255, 'null' => 0, 'default' => ''),
         ':keys' => array(
             'PRIMARY' => 'id',
         ),
     ),
     'wadev_promocode' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
-        'create_datetime' => array('datetime', 'null' => 0),
+        'create_datetime' => array('datetime', 'null' => 0, 'default' => 'CURRENT_TIMESTAMP'),
         'type' => array('varchar', 8, 'null' => 0, 'default' => 'single'),
         'code' => array('varchar', 64, 'null' => 0),
         'start_date' => array('datetime'),
