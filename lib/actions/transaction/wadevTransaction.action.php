@@ -10,6 +10,7 @@ class wadevTransactionAction extends wadevViewAction
 
         // удалим инфу о новых
         (new waAppSettingsModel())->set('wadev', 'new_transactions', 0);
+        wa()->getStorage()->write('apps-count', array('wadev' => 0));
 
         $search = waRequest::get('search', '', waRequest::TYPE_STRING_TRIM);
         $start = waRequest::param('start', 0, waRequest::TYPE_INT);

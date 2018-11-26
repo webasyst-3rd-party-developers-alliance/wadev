@@ -4,7 +4,6 @@ class wadevBackendAction extends wadevViewAction
     public function execute()
     {
         
-        $message = 'Hello world!';
         $api_key = wadevHelper::getApiKey();
         if($api_key) {
             $balance = (new wadevWebasystMyApi($api_key))->balance();
