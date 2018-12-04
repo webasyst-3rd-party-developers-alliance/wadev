@@ -25,10 +25,18 @@ class wadevLicenseCheckAction extends wadevViewAction
                 $data['domain'], empty($data['product']) ? null : $data['product']
             );
 
+
+
         } catch (waException $e) {
             $error = $e->getMessage();
         }
+        $net = new wadevNet();
+        try {
+            $is_cloud = $net->query('http://' . trim($data['domain']) . '/wa-apps/hosting/css/hosting.css');
+        } catch (waException $e) {
+            $is_cloud = false;
+        }
 
-        $this->view->assign(compact('error', 'licenses'));
+        $this->view->assign(compact('error', 'licenses', 'is_cloud'));
     }
 }

@@ -1,3 +1,8 @@
+{if $is_cloud}
+    <div class="alert block">
+        <i class="icon16 light-bulb"></i> [`The domain is in the cloud Webasyst`]
+    </div>
+{/if}
 {if !empty($error)}
     <div class="error block">
         [`Error`]. {$error}
