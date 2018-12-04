@@ -24,9 +24,6 @@ class wadevLicenseCheckAction extends wadevViewAction
             $licenses = wa('wadev')->getConfig()->getWebasystMyApi()->check(
                 $data['domain'], empty($data['product']) ? null : $data['product']
             );
-
-
-
         } catch (waException $e) {
             $error = $e->getMessage();
         }
