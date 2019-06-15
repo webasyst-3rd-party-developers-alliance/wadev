@@ -1,0 +1,13 @@
+{
+  "license": "MIT",
+  "description": "Developer Account Manager Application for Webasyst Framework",
+  "config": {
+    "vendor-dir": "lib/vendors",
+    "platform": {
+      "php": "5.6.0"
+    }
+  },
+  "require": {
+    "serger/webasyst-developer-account-api-sdk": "~1"
+  }
+}

@@ -128,4 +128,13 @@ class wadevConfig extends waAppConfig
         }
         return $new_transactions;
     }
+
+    /**
+     * @inheritDoc
+     */
+    public function init()
+    {
+        require __DIR__ . '/../vendors/autoload.php';
+        parent::init();
+    }
 }

@@ -1,4 +1,5 @@
-wadev.min.js
 /.buildpath
 /.project
 *.tar.gz
+composer.lock
+
