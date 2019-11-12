@@ -13,7 +13,7 @@ class wadevSettingsAction extends wadevViewAction
     {
         //@todo: checkRights
 
-        $settings = (array)$this->AppSetting->get('wadev');
+        $settings = (array)$this->AppSetting->get();
         unset($settings['api_key'], $settings['update_time']);
 
         $this->view->assign(compact('settings'));
@@ -23,7 +23,7 @@ class wadevSettingsAction extends wadevViewAction
     {
         parent::preExecute();
 
-        $this->AppSetting = new waAppSettingsModel();
+        $this->AppSetting = new wadevSettingsModel();
     }
 
 

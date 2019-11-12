@@ -45,8 +45,9 @@ class wadevTransaction extends wadevEntity
                     return strtotime($t['datetime']) > strtotime($last_transaction->datetime);
                 });
             }
-
+            $contact_id = wa()->getUser()->getId();
             foreach ($transactions as $t) {
+                $t['contact_id'] = $contact_id;
                 $transaction = new wadevTransactionModel($t);
                 if ($transaction->save()) {
                     $new_transactions[] = $transaction;

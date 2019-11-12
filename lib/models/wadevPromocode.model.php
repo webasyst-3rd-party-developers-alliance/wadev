@@ -12,7 +12,7 @@ class wadevPromocodeModel extends wadevBasePromocodeModel
      */
     public function findLast($limit = 10)
     {
-        return self::generateModels($this->order('create_datetime DESC')->limit($limit)->fetchAll(),
+        return self::generateModels($this->where('contact_id='.wa()->getUser()->getId())->order('create_datetime DESC')->limit($limit)->fetchAll(),
             $limit === 1 ?: false);
     }
 
@@ -33,5 +33,11 @@ class wadevPromocodeModel extends wadevBasePromocodeModel
                 return 'S';
         }
         return '';
+    }
+
+    public function findAll()
+    {
+        $promos = $this->getByField('contact_id', wa()->getUser()->getId(), true);
+        return self::generateModels($promos);
     }
 }

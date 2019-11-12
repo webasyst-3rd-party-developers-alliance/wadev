@@ -18,7 +18,7 @@ class wadevTransactionModel extends wadevBaseTransactionModel
         if (!empty($search)) {
             $search_sql = "AND CONCAT(order_id, '', comment) LIKE '%" . $this->escape($search, 'like') . "%'";
         }
-
+        $contact_id_sql = 'contact_id='.wa()->getUser()->getId().' and ';
         $between[0] = date("Y-m-d 00:00:00", ifempty($between[0], 0));
         $between[1] = date("Y-m-d 23:59:59", ifempty($between[1], 1893456000));
         $between_sql = 'datetime BETWEEN s:from AND s:to';
@@ -28,6 +28,7 @@ class wadevTransactionModel extends wadevBaseTransactionModel
                     *
                 FROM wadev_transaction
                 WHERE
+                {$contact_id_sql}
                 {$between_sql}
                 {$search_sql}
                 ORDER BY datetime DESC
@@ -50,7 +51,7 @@ class wadevTransactionModel extends wadevBaseTransactionModel
 
     public function findLast($limit = 10)
     {
-        return self::generateModels($this->order('datetime DESC')->limit($limit)->fetchAll(), $limit === 1?: false);
+        return self::generateModels($this->where('contact_id='.wa()->getUser()->getId())->order('datetime DESC')->limit($limit)->fetchAll(), $limit === 1?: false);
     }
 
 }
