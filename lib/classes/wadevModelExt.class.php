@@ -364,6 +364,8 @@ class wadevModelExt extends waModel
      * @param $pk int|array
      *
      * @return static|static[]|null
+     *
+     * @deprecated Use getById instead. Just because search by _primary_ key returns not more than one result
      */
     public function findByPk($pk)
     {
