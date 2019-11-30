@@ -66,12 +66,12 @@ class wadevConfig extends waAppConfig
 
     public function getSetting($name = null, $default = '')
     {
-        return $this->getAppSettingsModel()->get('wadev', $name, $default);
+        return $this->getAppSettingsModel()->get($name, $default);
     }
 
     public function setSetting($name, $value)
     {
-        return $this->getAppSettingsModel()->set('wadev', $name, $value);
+        return $this->getAppSettingsModel()->set($name, $value);
     }
 
     public function currentBalance($update = false)
@@ -86,7 +86,7 @@ class wadevConfig extends waAppConfig
         if ($update || !is_array($balance)) {
             try {
                 $balance = (new wadevWebasystMyApi($this->getSetting('api_key')))->balance();
-                $this->getAppSettingsModel()->set('wadev', 'balance', json_encode($balance));
+                $this->getAppSettingsModel()->set('balance', json_encode($balance));
             } catch (waException $e) {
                 if (!is_array($balance)) {
                     $balance = array();
@@ -112,7 +112,7 @@ class wadevConfig extends waAppConfig
     protected function getAppSettingsModel()
     {
         if (!$this->AppSetting) {
-            $this->AppSetting = new waAppSettingsModel();
+            $this->AppSetting = new wadevSettingsModel();
         }
 
         return $this->AppSetting;

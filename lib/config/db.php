@@ -14,6 +14,7 @@ return array(
     ),
     'wadev_promocode' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
+        'contact_id' => array('int', 11, 'null' => 0),
         'create_datetime' => array('datetime', 'null' => 0, 'default' => 'CURRENT_TIMESTAMP'),
         'type' => array('varchar', 8, 'null' => 0, 'default' => 'single'),
         'code' => array('varchar', 64, 'null' => 0),
@@ -35,8 +36,17 @@ return array(
             'PRIMARY' => 'id',
         ),
     ),
+    'wadev_settings' => array(
+        'contact_id' => array('int', 11, 'null' => 0),
+        'name' => array('varchar', 64, 'null' => 0),
+        'value' => array('text', 'null' => 0),
+        ':keys' => array(
+            'PRIMARY' => array('contact_id', 'name'),
+        ),
+    ),
     'wadev_transaction' => array(
         'id' => array('int', 11, 'null' => 0, 'autoincrement' => 1),
+        'contact_id' => array('int', 11, 'null' => 0),
         'datetime' => array('datetime', 'null' => 0),
         'balance_before' => array('decimal', "15,2", 'default' => '0.00'),
         'amount' => array('decimal', "15,2", 'default' => '0.00'),

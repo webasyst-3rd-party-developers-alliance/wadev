@@ -15,11 +15,11 @@ class wadevSettingsSaveController extends waJsonController
         $this->clearInfo();
 
         $data = (array)$this->getRequest()->post('data', array(), waRequest::TYPE_ARRAY);
-        $AppSetting = new waAppSettingsModel();
+        $AppSetting = new wadevSettingsModel();
 
         foreach ($data as $key => $val) {
             if (in_array($key, $this->valid_settings) && !empty($val)) {
-                $AppSetting->set('wadev', $key, $val);
+                $AppSetting->set($key, $val);
             }
         }
     }
@@ -45,13 +45,13 @@ class wadevSettingsSaveController extends waJsonController
 
             foreach ((array)$model_classes[$key] as $model) {
                 if (class_exists($model)) {
-                    (new $model)->truncate();
+                    (new $model)->deleteByContactId();
                 }
             }
 
             if ($key == 'transactions') {
-                (new waAppSettingsModel())->del('wadev', 'api.transactions');
-                (new waAppSettingsModel())->del('wadev', 'new_transactions');
+                (new wadevSettingsModel())->del('api.transactions');
+                (new wadevSettingsModel())->del('new_transactions');
             }
         }
     }

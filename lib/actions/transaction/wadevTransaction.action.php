@@ -9,7 +9,8 @@ class wadevTransactionAction extends wadevViewAction
         $last_update = (int)wa('wadev')->getConfig()->getSetting('api.transactions');
 
         // удалим инфу о новых
-        (new waAppSettingsModel())->set('wadev', 'new_transactions', 0);
+        (new wadevSettingsModel())->set('new_transactions', 0);
+        wa('wadev')->getConfig()->getSetting('new_transactions', 0);
         $counts = wa()->getStorage()->get('apps-count');
         $counts['wadev'] = 0;
         wa()->getStorage()->write('apps-count', $counts);

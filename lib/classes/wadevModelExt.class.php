@@ -521,4 +521,9 @@ class wadevModelExt extends waModel
         }
         return true;
     }
+
+    public function deleteByContactId()
+    {
+        return $this->deleteByField('contact_id', wa()->getUser()->getId());
+    }
 }
