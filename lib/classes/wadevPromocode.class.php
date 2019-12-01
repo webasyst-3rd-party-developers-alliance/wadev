@@ -21,6 +21,11 @@ class wadevPromocode extends wadevEntity
         parent::__construct($model);
     }
 
+    /**
+     * @param $slug
+     * @return mixed|wadevProduct
+     * @throws waDbException
+     */
     public function getProduct($slug)
     {
         if (!is_array($this->_products) || !array_key_exists($slug, $this->_products)) {
@@ -38,6 +43,10 @@ class wadevPromocode extends wadevEntity
         return $this->_products[$slug];
     }
 
+    /**
+     * @return array|wadevProduct[]|null
+     * @throws waDbException
+     */
     public function getProducts()
     {
         if ($this->_products === null) {
@@ -56,6 +65,7 @@ class wadevPromocode extends wadevEntity
      * Получает транзакции из API и сохраняет новые в БД
      *
      * @return bool|int
+     * @throws waException
      */
     public static function updateFromApi()
     {
@@ -106,6 +116,8 @@ class wadevPromocode extends wadevEntity
 
     /**
      * @param wadevProduct $product
+     * @return bool|int|resource
+     * @throws waDbException
      */
     public function addProduct($product)
     {
