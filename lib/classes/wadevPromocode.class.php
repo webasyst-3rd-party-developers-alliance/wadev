@@ -51,7 +51,7 @@ class wadevPromocode extends wadevEntity
     {
         if ($this->_products === null) {
             $this->_products = [];
-            $products = wadevPromocodeProductsModel::model()->findByFields('code_id', $this->model->pk, true);
+            $products = (new wadevPromocodeProductsModel)->findByFields('code_id', $this->model->pk, true);
             foreach ($products as $product) {
                 $product_model = wadevProductModel::model()->findByPk($product->product_id);
                 $this->_products[$product_model->slug] = new wadevProduct($product_model);

@@ -23,16 +23,34 @@ class wadevTransactionAction extends wadevViewAction
         $total_rows = true;
 
         /** @var wadevTransactionModel[] $transactions */
-        $transactions = wadevTransactionModel::model()->findAll(
-            $search,
-            [strtotime($from), strtotime($to)],
-            [$start, $limit],
-            $total_rows
-        );
+        $conditions = [];
+        $condition_values = [];
+        if ($search) {
+            $conditions[] = 'comment LIKE l:search';
+            $condition_values['search'] = str_replace(['*', '?'], ['', '%', '_'], $search);
+        }
+        if($from) {
+            $conditions[] = 'datetime >= s:from';
+            $condition_values['from'] = date('Y-m-d 00:00:00', strtotime($from));
+        }
+        if($to) {
+            $conditions[] = 'datetime <= s:to';
+            $condition_values['to'] = date('Y-m-d 00:00:00', strtotime($from));
+        }
+
+        $Transaction = new wadevTransactionModel();
+        $condition = implode(' AND ', $conditions);
+
+        $total_rows = $Transaction->select('COUNT(*)');
+        if($condition) $total_rows = $total_rows->where($condition, $condition_values);
+        $total_rows = $total_rows->fetchField();
+        $transactions = $Transaction->select('*');
+        if($condition) $transactions = $transactions->where($condition, $condition_values);
+        $transactions = $transactions->limit("$start, $limit")->fetchAll();
 
         $total = ['plus' => 0, 'minus' => 0];
         foreach ($transactions as $transaction) {
-            $total[$transaction->amount > 0 ? 'plus' : 'minus'] += $transaction->amount;
+            $total[$transaction['amount'] > 0 ? 'plus' : 'minus'] += $transaction['amount'];
         }
 
         $balance = wa('wadev')->getConfig()->currentBalance(true);
