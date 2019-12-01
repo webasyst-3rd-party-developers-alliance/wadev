@@ -1,12 +1,10 @@
 <?php
 
-class wadevPromocodeProductsModel extends wadevBasePromocodeProductsModel
+/**
+ * Class wadevPromocodeProductsModel
+ *
+ * Связующая модель many-to-many промокоды-продукты
+ */
+class wadevPromocodeProductsModel extends wadevModel
 {
-    public function beforeSave()
-    {
-        if ($this->isNewRecord) {
-            $this->usage = 0;
-        }
-        return true;
-    }
 }
