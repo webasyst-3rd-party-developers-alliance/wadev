@@ -7,4 +7,5 @@
  */
 class wadevPromocodeProductsModel extends wadevModel
 {
+    protected $table = 'wadev_promocode_products';
 }
