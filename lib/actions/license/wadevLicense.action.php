@@ -8,7 +8,7 @@ class wadevLicenseAction extends wadevViewAction
 {
     public function execute()
     {
-        $products = wadevProductModel::model()->findAll();
+        $products = (new wadevProductModel)->order('name')->fetchAll();
 
         $this->view->assign(compact('products'));
     }

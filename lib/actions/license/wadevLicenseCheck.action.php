@@ -2,9 +2,7 @@
 
 /**
  * @author Serge Rodovnichenko <serge@syrnik.com>
- * @version
  * @copyright Serge Rodovnichenko, 2017
- * @license
  */
 class wadevLicenseCheckAction extends wadevViewAction
 {
