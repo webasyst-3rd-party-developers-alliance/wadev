@@ -1,6 +1,6 @@
 <?php
 
-class wadevSettingsModel extends waModel
+class wadevSettingsModel extends wadevModel
 {
     protected $table = 'wadev_settings';
     protected $id = ['contact_id', 'name'];
