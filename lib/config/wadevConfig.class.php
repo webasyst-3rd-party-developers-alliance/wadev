@@ -12,6 +12,7 @@ class wadevConfig extends waAppConfig
     /**
      * @param array $route
      * @return array|null
+     * @throws waException
      */
     public function getRouting($route = array())
     {
@@ -34,6 +35,7 @@ class wadevConfig extends waAppConfig
     /**
      * @param $route
      * @return array
+     * @throws waException
      */
     protected function getPluginRoutes($route)
     {
@@ -64,16 +66,36 @@ class wadevConfig extends waAppConfig
         return $all_plugins_routes;
     }
 
+    /**
+     * @param null $name
+     * @param string $default
+     * @return array|mixed|string
+     * @throws waDbException
+     * @throws waException
+     */
     public function getSetting($name = null, $default = '')
     {
         return $this->getAppSettingsModel()->get($name, $default);
     }
 
+    /**
+     * @param $name
+     * @param $value
+     * @return bool
+     * @throws waDbException
+     * @throws waException
+     */
     public function setSetting($name, $value)
     {
         return $this->getAppSettingsModel()->set($name, $value);
     }
 
+    /**
+     * @param bool $update
+     * @return array|mixed|null
+     * @throws waDbException
+     * @throws waException
+     */
     public function currentBalance($update = false)
     {
         $cached_balance = $this->getSetting('balance', null);
@@ -100,6 +122,7 @@ class wadevConfig extends waAppConfig
 
     /**
      * @return wadevWebasystMyApi
+     * @throws waException
      */
     public function getWebasystMyApi()
     {
@@ -107,7 +130,9 @@ class wadevConfig extends waAppConfig
     }
 
     /**
-     * @return waAppSettingsModel
+     * @return wadevSettingsModel
+     * @throws waDbException
+     * @throws waException
      */
     protected function getAppSettingsModel()
     {
@@ -118,6 +143,11 @@ class wadevConfig extends waAppConfig
         return $this->AppSetting;
     }
 
+    /**
+     * @return bool|int|string
+     * @throws waDbException
+     * @throws waException
+     */
     public function onCount()
     {
         $new_transactions = (int) $this->getSetting('new_transactions');

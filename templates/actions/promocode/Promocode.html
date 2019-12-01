@@ -34,16 +34,16 @@
         </thead>
         <tbody>
         {foreach $promocodes as $promo}
-            <tr data-promo-id="{$promo->model->pk}">
-                <td>{$promo->model->create_datetime|wa_datetime:'humandatetime'}</td>
-                <td>{$promo->model->getTypeName()}</td>
-                <td>{$promo->model->code}</td>
-                <td>{$promo->model->start_date|wa_datetime:'humandatetime'}</td>
-                <td>{$promo->model->end_date|wa_datetime:'humandatetime'}</td>
-                <td>{$promo->model->percent}</td>
-                <td>{$promo->model->usage}</td>
-                <td class="small">{$promo->model->description|escape}</td>
-                <td class="small">{foreach $promo->products as $product}{$product->model->name|escape}<br>{/foreach}</td>
+            <tr data-promo-id="{$promo.id}">
+                <td>{$promo.create_datetime|wa_datetime:'humandatetime'}</td>
+                <td>{$promo.type}</td>
+                <td>{$promo.code}</td>
+                <td>{$promo.start_date|wa_datetime:'humandatetime'}</td>
+                <td>{$promo.end_date|wa_datetime:'humandatetime'}</td>
+                <td>{$promo.percent}</td>
+                <td>{$promo.usage}</td>
+                <td class="small">{$promo.description|escape}</td>
+                <td class="small">{foreach $promo.products as $product}{$product.name|escape}<br>{/foreach}</td>
             </tr>
         {/foreach}
         </tbody>

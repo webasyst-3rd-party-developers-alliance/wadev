@@ -1,10 +1,14 @@
 <?php
 
-class wadevProductModel extends wadevBaseProductModel
+/**
+ * Class wadevProductModel
+ */
+class wadevProductModel extends wadevModel
 {
+    protected $table = 'wadev_product';
+
     public function findBySlug($slug)
     {
-        $product = $this->select('*')->where('slug = s:slug', ['slug' => $slug])->fetchAssoc();
-        return self::generateModels([$product], true);
+        return $this->select('*')->where('slug = s:slug', ['slug' => $slug])->fetchAssoc();
     }
 }

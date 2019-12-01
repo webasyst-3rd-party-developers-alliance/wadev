@@ -291,12 +291,20 @@ class wadevModelExt extends waModel
 
     /**
      * @return static
+     * @throws waDbException
+     * @deprecated Please stop use static methods everywhere it possible
      */
     public static function model()
     {
         return new static();
     }
 
+    /**
+     * @param $vals
+     * @param bool $one
+     * @return mixed|static|null
+     * @deprecated Please stop use static methods everywhere it possible
+     */
     public static function generateModels($vals, $one = false)
     {
         $models = self::populate($vals);
@@ -356,6 +364,8 @@ class wadevModelExt extends waModel
      * @param $pk int|array
      *
      * @return static|static[]|null
+     *
+     * @deprecated Use getById instead. Just because search by _primary_ key returns not more than one result
      */
     public function findByPk($pk)
     {
@@ -392,6 +402,7 @@ class wadevModelExt extends waModel
      * @param $vals array
      *
      * @return static[]|null
+     * @deprecated Please stop use static methods everywhere it possible
      */
     public static function populate($vals)
     {
