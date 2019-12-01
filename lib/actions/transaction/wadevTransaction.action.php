@@ -1,5 +1,8 @@
 <?php
 
+/**
+ * Class wadevTransactionAction
+ */
 class wadevTransactionAction extends wadevViewAction
 {
     public function execute()
@@ -26,26 +29,26 @@ class wadevTransactionAction extends wadevViewAction
         $conditions = [];
         $condition_values = [];
         if ($search) {
-            $conditions[] = 'comment LIKE l:search';
-            $condition_values['search'] = str_replace(['*', '?'], ['', '%', '_'], $search);
+            $conditions[] = 'comment LIKE \'%l:search%\'';
+            $condition_values['search'] = $search;
         }
-        if($from) {
+        if ($from) {
             $conditions[] = 'datetime >= s:from';
             $condition_values['from'] = date('Y-m-d 00:00:00', strtotime($from));
         }
-        if($to) {
+        if ($to) {
             $conditions[] = 'datetime <= s:to';
-            $condition_values['to'] = date('Y-m-d 00:00:00', strtotime($from));
+            $condition_values['to'] = date('Y-m-d 00:00:00', strtotime($to));
         }
 
         $Transaction = new wadevTransactionModel();
         $condition = implode(' AND ', $conditions);
 
         $total_rows = $Transaction->select('COUNT(*)');
-        if($condition) $total_rows = $total_rows->where($condition, $condition_values);
-        $total_rows = $total_rows->fetchField();
+        if ($condition) $total_rows = $total_rows->where($condition, $condition_values);
+        $total_rows = (int)$total_rows->fetchField();
         $transactions = $Transaction->select('*');
-        if($condition) $transactions = $transactions->where($condition, $condition_values);
+        if ($condition) $transactions = $transactions->where($condition, $condition_values);
         $transactions = $transactions->limit("$start, $limit")->fetchAll();
 
         $total = ['plus' => 0, 'minus' => 0];
