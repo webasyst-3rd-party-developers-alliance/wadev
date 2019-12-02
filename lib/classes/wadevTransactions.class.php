@@ -3,16 +3,19 @@
 /**
  * Class wadevTransaction
  *
- * @property wadevTransactionModel $model
  */
-class wadevTransaction extends wadevEntity
+class wadevTransactions
 {
-    public function __construct($model = null)
+    /** @var wadevTransactionModel */
+    protected $_model;
+
+    /**
+     * wadevTransactions constructor.
+     * @throws waDbException
+     */
+    public function __construct()
     {
-        if ($model === null) {
-            $model = new wadevTransactionModel();
-        }
-        parent::__construct($model);
+        $model =  new wadevTransactionModel();
     }
 
     /**

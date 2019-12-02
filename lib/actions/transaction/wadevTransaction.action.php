@@ -2,18 +2,18 @@
 
 /**
  * Class wadevTransactionAction
+ *
+ * @method wadevConfig getConfig()
  */
 class wadevTransactionAction extends wadevViewAction
 {
     public function execute()
     {
-        $t = new wadevTransaction(new wadevTransactionModel());
-        $new_transactions_count = $t->updateFromApi();
-        $last_update = (int)wa('wadev')->getConfig()->getSetting('api.transactions');
+        $new_transactions_count = $this->getConfig()->isTransactionRefreshRequired() ? $this->getConfig()->fetchNewTransactions() : 0;
+        $last_update = (int)$this->getConfig()->getUserSetting('api.transactions');
 
         // удалим инфу о новых
-        (new wadevSettingsModel())->set('new_transactions', 0);
-        wa('wadev')->getConfig()->getSetting('new_transactions', 0);
+        $this->getConfig()->setUserSetting('new_transactions', 0);
         $counts = wa()->getStorage()->get('apps-count');
         $counts['wadev'] = 0;
         wa()->getStorage()->write('apps-count', $counts);
@@ -23,9 +23,7 @@ class wadevTransactionAction extends wadevViewAction
         $limit = waRequest::param('limit', 10, waRequest::TYPE_INT);
         $from = waRequest::get('from', '', waRequest::TYPE_STRING_TRIM);
         $to = waRequest::get('to', '', waRequest::TYPE_STRING_TRIM);
-        $total_rows = true;
 
-        /** @var wadevTransactionModel[] $transactions */
         $conditions = [];
         $condition_values = [];
         if ($search) {
@@ -45,18 +43,21 @@ class wadevTransactionAction extends wadevViewAction
         $condition = implode(' AND ', $conditions);
 
         $total_rows = $Transaction->select('COUNT(*)');
-        if ($condition) $total_rows = $total_rows->where($condition, $condition_values);
-        $total_rows = (int)$total_rows->fetchField();
         $transactions = $Transaction->select('*');
-        if ($condition) $transactions = $transactions->where($condition, $condition_values);
-        $transactions = $transactions->limit("$start, $limit")->fetchAll();
+        if ($condition) {
+            $total_rows = $total_rows->where($condition, $condition_values);
+            $transactions = $transactions->where($condition, $condition_values);
+        }
+
+        $total_rows = (int)$total_rows->fetchField();
+        $transactions = $transactions->order('datetime DESC')->limit("$start, $limit")->fetchAll();
 
         $total = ['plus' => 0, 'minus' => 0];
         foreach ($transactions as $transaction) {
             $total[$transaction['amount'] > 0 ? 'plus' : 'minus'] += $transaction['amount'];
         }
 
-        $balance = wa('wadev')->getConfig()->currentBalance(true);
+        $balance = $this->getConfig()->currentBalance(true);
 
         wadevHelper::assignPagination($this->view, $start, $limit, $total_rows);
 
