@@ -1,11 +1,22 @@
 <?php
 
+/**
+ * Class wadevTransactionModel
+ */
 class wadevTransactionModel extends wadevModel
 {
     protected $table = 'wadev_transaction';
 
-    public function findLast($limit = 10)
+    /**
+     * @param int $contact_id
+     * @param int $limit
+     * @return array
+     */
+    public function findLast($contact_id, $limit = 10)
     {
-        return $this->where('contact_id='.wa()->getUser()->getId())->order('datetime DESC')->limit($limit)->fetchAll();
+        return (array)$this->select('*')->where('contact_id=i:contact_id', ['contact_id' => $contact_id])
+            ->order('datetime DESC')
+            ->limit($limit)
+            ->fetchAll();
     }
 }

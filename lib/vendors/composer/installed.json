@@ -1,0 +1,49 @@
+[
+    {
+        "name": "serger/cake-utility",
+        "version": "v1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/SergeR/cake-utils.git",
+            "reference": "c7d6554c08f1d93be9f3f4b1c5cae10733558d42"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/SergeR/cake-utils/zipball/c7d6554c08f1d93be9f3f4b1c5cae10733558d42",
+            "reference": "c7d6554c08f1d93be9f3f4b1c5cae10733558d42",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.6.0"
+        },
+        "suggest": {
+            "ext-intl": "To use Text::transliterate() or Text::slug()",
+            "lib-ICU": "To use Text::transliterate() or Text::slug()"
+        },
+        "time": "2019-04-04T22:17:46+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "SergeR\\CakeUtility\\": "src"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "CakePHP Community",
+                "homepage": "https://github.com/cakephp/utility/graphs/contributors"
+            }
+        ],
+        "description": "CakePHP 3.x Utility classes such as Inflector, String, and Hash without Cake/Core dependency",
+        "keywords": [
+            "hash",
+            "inflector",
+            "string"
+        ]
+    }
+]

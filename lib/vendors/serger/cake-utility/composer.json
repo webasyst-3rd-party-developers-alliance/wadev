@@ -1,0 +1,29 @@
+{
+  "name": "serger/cake-utility",
+  "description": "CakePHP 3.x Utility classes such as Inflector, String, and Hash without Cake/Core dependency",
+  "type": "library",
+  "keywords": [
+    "inflector",
+    "string",
+    "hash"
+  ],
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "CakePHP Community",
+      "homepage": "https://github.com/cakephp/utility/graphs/contributors"
+    }
+  ],
+  "require": {
+    "php": ">=5.6.0"
+  },
+  "suggest": {
+    "ext-intl": "To use Text::transliterate() or Text::slug()",
+    "lib-ICU": "To use Text::transliterate() or Text::slug()"
+  },
+  "autoload": {
+    "psr-4": {
+      "SergeR\\CakeUtility\\": "src"
+    }
+  }
+}

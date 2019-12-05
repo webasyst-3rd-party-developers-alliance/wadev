@@ -1,0 +1,11 @@
+{
+    "config": {
+        "vendor-dir": "lib/vendors",
+        "platform": {
+            "php": "^7.2"
+        }
+    },
+    "require": {
+        "serger/cake-utility": "^1.0"
+    }
+}
