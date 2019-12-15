@@ -24,7 +24,7 @@ class wadevTransactionAction extends wadevViewAction
         $from = waRequest::get('from', '', waRequest::TYPE_STRING_TRIM);
         $to = waRequest::get('to', '', waRequest::TYPE_STRING_TRIM);
 
-        $conditions = [];
+        $conditions = ['contact_id=' . wa()->getUser()->getId()];
         $condition_values = [];
         if ($search) {
             $conditions[] = 'comment LIKE \'%l:search%\'';

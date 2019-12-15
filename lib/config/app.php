@@ -6,6 +6,6 @@ return array(
             48 => 'img/wadev48.png',
             96 => 'img/wadev96.png',
         ),
-    'version' => '1.0.3',
+    'version' => '1.0.4',
     'vendor'  => '670917',
 );
