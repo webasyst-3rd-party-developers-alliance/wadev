@@ -24,7 +24,7 @@ class wadevOrderAction extends wadevViewAction
             $order = [];
             $error = $e->getMessage();
         }
-
-        $this->view->assign(compact('order', 'error'));
+        $is_dialog = true;
+        $this->view->assign(compact('order', 'error', 'is_dialog'));
     }
 }

@@ -18,20 +18,27 @@ class wadevLicenseCheckAction extends wadevViewAction
             if (empty($data['domain'])) {
                 throw new waException(_w('Domain required'));
             }
-
-            $licenses = wa('wadev')->getConfig()->getWebasystMyApi()->check(
-                $data['domain'], empty($data['product']) ? null : $data['product']
-            );
+            $data['domain'] = trim($data['domain']);
+            if (wa_is_int($data['domain'])) {
+                $order = wa('wadev')->getConfig()->getWebasystMyApi()->order($data['domain']);
+                $order['id'] = $data['domain'];
+                $this->setTemplate(wa()->getAppPath('templates/actions/order/OrderCheck.html'));
+                $this->view->assign(compact('order'));
+            } else {
+                $licenses = wa('wadev')->getConfig()->getWebasystMyApi()->check(
+                    $data['domain'], empty($data['product']) ? null : $data['product']
+                );
+                $net = new wadevNet();
+                try {
+                    $is_cloud = $net->query('http://' . $data['domain'] . '/wa-apps/hosting/css/hosting.css');
+                } catch (waException $e) {
+                    $is_cloud = false;
+                }
+                $this->view->assign(compact('licenses', 'is_cloud'));
+            }
         } catch (waException $e) {
             $error = $e->getMessage();
         }
-        $net = new wadevNet();
-        try {
-            $is_cloud = $net->query('http://' . trim($data['domain']) . '/wa-apps/hosting/css/hosting.css');
-        } catch (waException $e) {
-            $is_cloud = false;
-        }
-
-        $this->view->assign(compact('error', 'licenses', 'is_cloud'));
+        $this->view->assign('error', $error);
     }
 }
