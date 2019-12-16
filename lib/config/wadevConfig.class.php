@@ -106,7 +106,7 @@ class wadevConfig extends waAppConfig
      */
     public function getUserSetting($name = null, $default = null)
     {
-        return (new wadevSettingsModel)->get(wa()->getUser()->getId(), $name, $default);
+        return (new wadevSettingsModel)->get($name, $default);
     }
 
     /**
@@ -275,7 +275,7 @@ class wadevConfig extends waAppConfig
      */
     public function isTransactionRefreshRequired()
     {
-        $user_settings = $this->getAppSettingsModel()->get(wa()->getUser()->getId());
+        $user_settings = $this->getAppSettingsModel()->get();
         if (!($api_key = Hash::get($user_settings, 'api_key'))) {
             return false;
         }
