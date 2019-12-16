@@ -18,8 +18,9 @@ class wadevSettingsModel extends wadevModel
      * @throws waException
      * @throws Exception
      */
-    public function get($contact_id, $name = null, $default = null)
+    public function get($name = null, $default = null)
     {
+        $contact_id = wa()->getUser()->getId();
         if ($name) {
             return $this->getOne($contact_id, $name, $default);
         }
