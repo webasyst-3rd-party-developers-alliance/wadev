@@ -1,0 +1,231 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wadev\n"
+"POT-Creation-Date: 2020-01-02 13:50+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wadev\n"
+"Language-Team: wadev\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Poedit-Language: en_US\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: utf-8\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+msgid "Woohoo, Webasyst app is ready!"
+msgstr ""
+
+msgid "Total"
+msgstr ""
+
+msgid "Show"
+msgstr ""
+
+msgid "rows"
+msgstr ""
+
+msgid "License check"
+msgstr ""
+
+msgid "Domain"
+msgstr ""
+
+msgid "Product"
+msgstr ""
+
+msgid "all"
+msgstr ""
+
+msgid "Choose \"all\" to see all licenses for your products issued for given domain"
+msgstr ""
+
+msgid "Check"
+msgstr ""
+
+msgid "Checking"
+msgstr ""
+
+msgid "The domain is in the cloud Webasyst"
+msgstr ""
+
+msgid "Error"
+msgstr ""
+
+msgid "No licenses issued for given domain"
+msgstr ""
+
+msgid "Date of Issue"
+msgstr ""
+
+msgid "Installation Date"
+msgstr ""
+
+msgid "Order"
+msgstr ""
+
+msgid "Leased"
+msgstr ""
+
+msgid "Discounts"
+msgstr ""
+
+msgid "Transactions"
+msgstr ""
+
+msgid "Date"
+msgstr ""
+
+msgid "Sum"
+msgstr ""
+
+msgid "Comment"
+msgstr ""
+
+msgid "Licenses"
+msgstr ""
+
+msgid "Install Date"
+msgstr ""
+
+msgid "Close"
+msgstr ""
+
+msgid " Да"
+msgstr ""
+
+msgid "Нет "
+msgstr ""
+
+msgid "Products"
+msgstr ""
+
+msgid "Name"
+msgstr ""
+
+msgid "Price"
+msgstr ""
+
+msgid "slug"
+msgstr ""
+
+msgid "Version"
+msgstr ""
+
+msgid "Lx2"
+msgstr ""
+
+msgid "P"
+msgstr ""
+
+msgid "New product"
+msgstr ""
+
+msgid "Load new products from Webasyst"
+msgstr ""
+
+msgid "Promocodes"
+msgstr ""
+
+msgid "last sync:"
+msgstr ""
+
+msgid "Update"
+msgstr ""
+
+msgid "Search"
+msgstr ""
+
+msgid "Settings"
+msgstr ""
+
+msgid "Leave this fied blank if you don't want to change stored key"
+msgstr ""
+
+msgid "Refresh rate"
+msgstr ""
+
+msgid "Reset"
+msgstr ""
+
+msgid "Be careful! Doors are closing!"
+msgstr ""
+
+msgid "Clear transactions"
+msgstr ""
+
+msgid "Clear promocodes"
+msgstr ""
+
+msgid "Clear products"
+msgstr ""
+
+msgid "Save"
+msgstr ""
+
+msgid "Saving"
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "Current account balance"
+msgstr ""
+
+msgid "Dates"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid " to "
+msgstr ""
+
+msgid "{$order.status|default:'Status unknown'}"
+msgstr ""
+
+msgid "type"
+msgstr ""
+
+msgid "percent"
+msgstr ""
+
+msgid "code"
+msgstr ""
+
+msgid "datetime"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "comment"
+msgstr ""
+
+msgid "product"
+msgstr ""
+
+msgid "domain"
+msgstr ""
+
+msgid "inst_datetime"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "License Check"
+msgstr ""
+
+msgid "Domain required"
+msgstr ""
+
+msgid "Order ID required"
+msgstr ""
