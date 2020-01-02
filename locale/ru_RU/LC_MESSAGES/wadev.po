@@ -1,0 +1,235 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: wadev\n"
+"POT-Creation-Date: 2020-01-02 13:50+0300\n"
+"PO-Revision-Date: \n"
+"Last-Translator: wadev\n"
+"Language-Team: wadev\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"\"Plural-Forms: nplurals=3; plural=((((n%10)==1)&&((n%100)!=11))?(0):(((((n%10)>=2)&&((n%10)<=4))&&(((n%100)<10)||((n%100)>=20)))?(1):2));\n"
+"\"X-Poedit-Language: ru_RU\n"
+"X-Poedit-SourceCharset: utf-8\n"
+"X-Poedit-Basepath: utf-8\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);\n"
+"Language: ru_RU\n"
+"X-Generator: Poedit 2.2.3\n"
+"X-Poedit-SearchPath-0: .\n"
+"X-Poedit-SearchPath-1: .\n"
+
+msgid "Woohoo, Webasyst app is ready!"
+msgstr ""
+
+msgid "Total"
+msgstr "Всего"
+
+msgid "Show"
+msgstr "Показать"
+
+msgid "rows"
+msgstr ""
+
+msgid "License check"
+msgstr "Проверка лицензии"
+
+msgid "Domain"
+msgstr "Домен"
+
+msgid "Product"
+msgstr "Продукт"
+
+msgid "all"
+msgstr "все"
+
+msgid "Choose \"all\" to see all licenses for your products issued for given domain"
+msgstr ""
+
+msgid "Check"
+msgstr "Проверить"
+
+msgid "Checking"
+msgstr "Проверка"
+
+msgid "The domain is in the cloud Webasyst"
+msgstr "Домен находится в облаке Webasyst"
+
+msgid "Error"
+msgstr "Ошибка"
+
+msgid "No licenses issued for given domain"
+msgstr "Лицензий для указанного домена не выдано"
+
+msgid "Date of Issue"
+msgstr "Дата выдачи"
+
+msgid "Installation Date"
+msgstr "Дата установки"
+
+msgid "Order"
+msgstr "Заказ"
+
+msgid "Leased"
+msgstr "Арендовано"
+
+msgid "Discounts"
+msgstr "Скидки"
+
+msgid "Transactions"
+msgstr "Транзакции"
+
+msgid "Date"
+msgstr "Дата"
+
+msgid "Sum"
+msgstr "Сумма"
+
+msgid "Comment"
+msgstr "Комментарий"
+
+msgid "Licenses"
+msgstr "Лицензии"
+
+msgid "Install Date"
+msgstr "Дата установки"
+
+msgid "Close"
+msgstr "Закрыть"
+
+msgid " Да"
+msgstr ""
+
+msgid "Нет "
+msgstr ""
+
+msgid "Products"
+msgstr "Продукты"
+
+msgid "Name"
+msgstr "Название"
+
+msgid "Price"
+msgstr "Цена"
+
+msgid "slug"
+msgstr ""
+
+msgid "Version"
+msgstr "Версия"
+
+msgid "Lx2"
+msgstr ""
+
+msgid "P"
+msgstr ""
+
+msgid "New product"
+msgstr ""
+
+msgid "Load new products from Webasyst"
+msgstr ""
+
+msgid "Promocodes"
+msgstr "Промокоды"
+
+msgid "last sync:"
+msgstr ""
+
+msgid "Update"
+msgstr "Обновить"
+
+msgid "Search"
+msgstr "Поиск"
+
+msgid "Settings"
+msgstr "Настройки"
+
+msgid "Leave this fied blank if you don't want to change stored key"
+msgstr "Оставьте поле пустым, если не хотите менять сохранённый ключ"
+
+msgid "Refresh rate"
+msgstr "Частота обновления"
+
+msgid "Reset"
+msgstr ""
+
+msgid "Be careful! Doors are closing!"
+msgstr "Осторожно! Двери закрываются!"
+
+msgid "Clear transactions"
+msgstr ""
+
+msgid "Clear promocodes"
+msgstr ""
+
+msgid "Clear products"
+msgstr ""
+
+msgid "Save"
+msgstr "Сохранить"
+
+msgid "Saving"
+msgstr ""
+
+msgid "Saved"
+msgstr ""
+
+msgid "minute"
+msgid_plural "minutes"
+msgstr[0] ""
+msgstr[1] ""
+msgstr[2] ""
+
+msgid "Current account balance"
+msgstr "Текущий баланс аккаунта"
+
+msgid "Dates"
+msgstr "Даты"
+
+msgid "Filter"
+msgstr "Фильтр"
+
+msgid " to "
+msgstr ""
+
+msgid "{$order.status|default:'Status unknown'}"
+msgstr ""
+
+msgid "type"
+msgstr "тип"
+
+msgid "percent"
+msgstr "процент"
+
+msgid "code"
+msgstr ""
+
+msgid "datetime"
+msgstr ""
+
+msgid "amount"
+msgstr ""
+
+msgid "comment"
+msgstr "комментарий"
+
+msgid "product"
+msgstr "продукт"
+
+msgid "domain"
+msgstr "домен"
+
+msgid "inst_datetime"
+msgstr ""
+
+msgid "Navigation"
+msgstr ""
+
+msgid "License Check"
+msgstr "Проверка лицензии"
+
+msgid "Domain required"
+msgstr "Требуется указать домен"
+
+msgid "Order ID required"
+msgstr "Требуется номер заказа"

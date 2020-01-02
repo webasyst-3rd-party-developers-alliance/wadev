@@ -1,0 +1,61 @@
+<script>
+    (function ($) {
+        $('<li><a href="#" target="_blank" class="wadev-licence-check-popup"><i class="icon16" style="background-image:url('+"'{$wa_url}wa-apps/wadev/img/wadev48.png'"+');background-size:16px 16px"></i>[`License check`]</a></li>')
+        .insertBefore('#h-request-operations .menu-v li.hr:last');
+        $('a.wadev-licence-check-popup')
+            .off('click.wadev')
+            .on('click.wadev', function(e){
+                e.preventDefault();
+                $('<div><form><div class="dialog-content"><h1>[`License check`]</h1>' +
+                    '<div class="wadev-license-check-dialog"><div class="fields">' +
+                    '<div class="field"><div class="name">Домен</div><div class="value"><input type="text" name="data[domain]"></div></div>' +
+                    '</div><div class="clear-both"></div><div class="wadev-check-result"></div></div></div>' +
+                    '<div class="dialog-buttons">' +
+                    '<div  style="float: right"><i class="icon16 loading" style="display: none"></i><button type="submit" class="submit blue button">[`Check`]</button></div>' +
+                    '<button type="button" class="cancel button">[`Close`]</button>' +
+                    '</div></form></div>').waDialog({
+                    onClose() {
+                        const $this = $(this);
+                        if ($this.data('xhr')) $this.data('xhr').abort();
+                        $this.remove()
+                    },
+                    onSubmit(d) {
+                        const $form = $(this);
+                        $('.submit.button', $form).prop('disabled', true);
+                        $('.icon16.loading', $form).show();
+                        const xhr = $.post(
+                            '{$wadev_app_url}?module=license&action=check',
+                            $form.serialize(),
+                            (r)=>{
+                                const $check_result = $('.wadev-check-result', d);
+                                $check_result.html(r);
+                                $('.dialog-window', d).css({
+                                    'max-width': '950px', width: '750px', 'min-width': '650px', height: '300px', 'min-height': '250px'
+                                });
+                                d.trigger('wa-resize');
+                                $check_result.css({
+                                    'max-height': $('.dialog-window', d).height()-130 + 'px',
+                                    'overflow-y': 'auto'
+                                });
+                            }
+                        ).always(()=>{
+                            $('.submit.button', $form).prop('disabled', false);
+                            $('.icon16.loading', $form).hide();
+                        });
+
+                        d.data('xhr', xhr);
+
+                        return false;
+                    },
+                    onLoad() {
+                        const $this=$(this);
+                        $this.data('xhr', false);
+                        $('.wadev-check-result', $this).off('click').on('click', ()=>false);
+                    },
+                    width: '420px',
+                    'min-width': '420px',
+                    height: '150px'
+                });
+            })
+    })(jQuery);
+</script>
