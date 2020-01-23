@@ -19,7 +19,7 @@ class wadevSettingsSaveController extends waJsonController
 
         foreach ($data as $key => $val) {
             if (in_array($key, $this->valid_settings) && !empty($val)) {
-                $AppSetting->set($key, $val);
+                $AppSetting->set(wa()->getUser()->getId(), $key, $val);
             }
         }
     }
